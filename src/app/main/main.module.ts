@@ -6,6 +6,8 @@ import { HeaderComponent } from '../layout/header/header.component';
 import { FooterComponent } from '../layout/footer/footer.component';
 import { MenuComponent } from '../layout/menu/menu.component';
 import { DashbroadComponent } from '../main/dashbroad/dashbroad.component';
+import { UserComponent } from './user/user.component';
+
 
 
 export const mainRoutes: Routes = [
@@ -15,6 +17,9 @@ export const mainRoutes: Routes = [
         {
             path: '', component: DashbroadComponent,
         },
+        {
+          path: 'user', component: UserComponent,
+      },
       ]
   }
 ];
@@ -24,7 +29,8 @@ export const mainRoutes: Routes = [
     HeaderComponent,
     FooterComponent,
     MenuComponent,
-    DashbroadComponent
+    DashbroadComponent,
+    UserComponent
   ],
   imports: [
     CommonModule,
