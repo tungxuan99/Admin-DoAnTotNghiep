@@ -5,9 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { HeaderComponent } from '../layout/header/header.component';
 import { FooterComponent } from '../layout/footer/footer.component';
 import { MenuComponent } from '../layout/menu/menu.component';
+import { SidebarComponent } from '../layout/sidebar/sidebar.component';
 import { DashbroadComponent } from '../main/dashbroad/dashbroad.component';
-import { UserComponent } from './user/user.component';
-
 
 
 export const mainRoutes: Routes = [
@@ -17,20 +16,16 @@ export const mainRoutes: Routes = [
         {
             path: '', component: DashbroadComponent,
         },
-        {
-          path: 'user', component: UserComponent,
-      },
       ]
   }
 ];
 @NgModule({
   declarations: [
-    MainComponent,
     HeaderComponent,
     FooterComponent,
     MenuComponent,
+    SidebarComponent,
     DashbroadComponent,
-    UserComponent
   ],
   imports: [
     CommonModule,

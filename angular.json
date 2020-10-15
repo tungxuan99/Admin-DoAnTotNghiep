@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Admin-DoAn5": {
+    "DoAn5-Admin": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/Admin-DoAn5",
+            "outputPath": "dist/DoAn5-Admin",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -24,10 +24,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "node_modules/primeng/resources/themes/saga-blue/theme.css",
-              "node_modules/primeng/resources/primeng.min.css",
-              "node_modules/primeicons/primeicons.css"
+              "src/styles.css"
             ],
             "scripts": []
           },
@@ -65,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Admin-DoAn5:build"
+            "browserTarget": "DoAn5-Admin:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "Admin-DoAn5:build:production"
+              "browserTarget": "DoAn5-Admin:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Admin-DoAn5:build"
+            "browserTarget": "DoAn5-Admin:build"
           }
         },
         "test": {
@@ -113,15 +110,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "Admin-DoAn5:serve"
+            "devServerTarget": "DoAn5-Admin:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "Admin-DoAn5:serve:production"
+              "devServerTarget": "DoAn5-Admin:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "Admin-DoAn5"
+  "defaultProject": "DoAn5-Admin"
 }
