@@ -2,8 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import { MainComponent } from './main/main.component';
-import { MainModule } from './main/main.module';
 
 
 
@@ -16,11 +14,9 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent,
   ],
   imports: [
     BrowserModule,
-    MainModule,
     RouterModule.forRoot(routes),
   ],
   exports: [RouterModule],
