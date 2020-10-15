@@ -1,0 +1,69 @@
+<!-- <div class="page-container" style="background: url(../assets/images/LOGIN_BG_AiO.png) center no-repeat; background-size: cover">
+    <div class="page-login-box">
+        <div class="page-login-widget animated fadeInRight">
+            <h1>Đăng nhập</h1>
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <div class="ui-form-group">
+                    <input type="text" formControlName="username" placeholder="Tên tài khoản">
+                </div>
+                <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                    <div *ngIf="f.username.errors.required">Chưa nhập tài khoản!</div>
+                </div>
+                <div class="ui-form-group">
+                    <input type="password" formControlName="password" placeholder="Mật khẩu">
+                </div>
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Chưa nhập mật khẩu!</div>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input formControlName="remember" type="checkbox" class="ace">
+                        <span class="lbl">Ghi nhớ</span>
+                    </label>
+                </div>
+                <button [disabled]="loginForm.invalid || loading" type="submit">
+                    Đăng nhập</button>
+            </form> 
+        </div>
+    </div>
+</div> -->
+
+
+<div id="app" class="app app-full-height app-without-header">
+    <div class="login">
+       <div class="login-content">
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+             <h1 class="text-center">Đăng nhập</h1>
+             <div class="form-group">
+                <label>Tên tài khoản</label>
+                <input type="text" class="form-control form-control-lg fs-15px"  formControlName="username" placeholder="Tên tài khoản">
+             </div>
+             <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+                <div *ngIf="f.username.errors.required">Chưa nhập tài khoản!</div>
+            </div>
+             <div class="form-group">
+                <div class="d-flex">
+                   <label>Mật khẩu</label>
+                   <a href="#" class="ml-auto text-muted">Forgot password?</a>
+                </div>
+                <input type="password" class="form-control form-control-lg fs-15px"  formControlName="password" placeholder="Mật khẩu">
+                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.required">Chưa nhập mật khẩu!</div>
+                </div>
+             </div>
+             <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                   <input class="custom-control-input" type="checkbox" value="" id="customCheck1" />
+                   <label class="custom-control-label fw-500" for="customCheck1">Remember me</label>
+                </div>
+             </div>
+             <button class="btn btn-primary btn-lg btn-block fw-500 mb-3" [disabled]="loginForm.invalid || loading" type="submit">
+                Đăng nhập</button>
+             <div class="text-center text-muted">
+                Don't have an account yet? <a href="page_register.html">Sign up</a>.
+             </div>
+          </form>
+       </div>
+    </div>
+    <a href="#" data-click="scroll-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
+ </div>

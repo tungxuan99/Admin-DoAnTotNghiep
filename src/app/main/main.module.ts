@@ -6,6 +6,8 @@ import { HeaderComponent } from '../layout/header/header.component';
 import { MenuComponent } from '../layout/menu/menu.component';
 import { SidebarComponent } from '../layout/sidebar/sidebar.component';
 import { DashbroadComponent } from '../main/dashbroad/dashbroad.component';
+import { RoleGuard } from '../lib/auth.guard';
+import { Role } from '../models/role';
 
 
 export const mainRoutes: Routes = [
@@ -14,6 +16,13 @@ export const mainRoutes: Routes = [
       children: [
         {
             path: '', component: DashbroadComponent,
+        },
+        {
+          path: 'product',
+          loadChildren: () =>
+            import('../main/user/user.module').then((m) => m.UserModule),
+          canActivate: [RoleGuard],
+          data: { roles: [Role.Admin, Role.User] },
         },
       ]
   }
