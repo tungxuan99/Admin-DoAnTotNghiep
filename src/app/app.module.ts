@@ -8,6 +8,10 @@ import { JwtInterceptor } from './lib/jwt.interceptor';
 import { AuthGuard } from './lib/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { RoleGuard } from './lib/auth.guard';
+import { Role } from './models/role';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -15,7 +19,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () => import('./main/main.module').then((m) => m.MainModule),
-    canActivate: [AuthGuard]
+    canActivate: [RoleGuard],
   },
   {
     path: 'login',
@@ -31,7 +35,9 @@ const routes: Routes = [
     BrowserModule,
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule,
+    NgbModule
   ],
   exports: [RouterModule],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },],

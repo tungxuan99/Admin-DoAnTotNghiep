@@ -4,10 +4,15 @@ import { MainComponent } from './main.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HeaderComponent } from '../layout/header/header.component';
 import { MenuComponent } from '../layout/menu/menu.component';
-import { SidebarComponent } from '../layout/sidebar/sidebar.component';
 import { DashbroadComponent } from '../main/dashbroad/dashbroad.component';
 import { RoleGuard } from '../lib/auth.guard';
 import { Role } from '../models/role';
+import { SharedModule } from '../shared/shared.module';
+import { SidebarComponent } from '../layout/sidebar/sidebar.component';
+import { UnauthorizedComponent } from '../shared/unauthorized/unauthorized.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+
 
 
 export const mainRoutes: Routes = [
@@ -18,11 +23,14 @@ export const mainRoutes: Routes = [
             path: '', component: DashbroadComponent,
         },
         {
-          path: 'product',
+          path: 'unauthorized',
+          component: UnauthorizedComponent,
+        },
+        {
+          path: 'user',
           loadChildren: () =>
-            import('../main/user/user.module').then((m) => m.UserModule),
+            import('./user/user.module').then((m) => m.UserModule),
           canActivate: [RoleGuard],
-          data: { roles: [Role.Admin, Role.User] },
         },
       ]
   }
@@ -31,15 +39,20 @@ export const mainRoutes: Routes = [
   declarations: [
     HeaderComponent,
     MenuComponent,
-    SidebarComponent,
     DashbroadComponent,
-    MainComponent
+    MainComponent,
+    SidebarComponent,
     
   ],
   imports: [
+    SharedModule,
     CommonModule,
     RouterModule.forChild(mainRoutes)
-  ],
+  ],  
   exports: [RouterModule],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
+  ]
 })
 export class MainModule { }
