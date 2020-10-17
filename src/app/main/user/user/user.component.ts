@@ -71,6 +71,8 @@ export class UserComponent extends BaseComponent implements OnInit {
     if (this.formdata.invalid) {
       return;
     } 
+    console.log("click ok!");
+    console.log(this.isCreate);
     if(this.isCreate) { 
         let tmp = {
            HoTen:value.hoten,
@@ -78,6 +80,7 @@ export class UserComponent extends BaseComponent implements OnInit {
            password:value.matkhau,
            level:value.role,       
           };
+          console.log("okok");
         this._api.post('/api/users/create-user',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Thêm thành công');
           this.search();
@@ -110,9 +113,9 @@ export class UserComponent extends BaseComponent implements OnInit {
   Reset() {  
     this.user = null;
     this.formdata = this.fb.group({
-      'HoTen': ['', Validators.required],
+      'hoten': ['', Validators.required],
       'taikhoan': ['', Validators.required],
-      'matkhau': ['', [this.pwdCheckValidator]],
+      'matkhau': ['', Validators.required],
       'nhaplaimatkhau': ['', Validators.required],
       'role': [this.roles[0].value, Validators.required],
     }, {
@@ -128,9 +131,9 @@ export class UserComponent extends BaseComponent implements OnInit {
     setTimeout(() => {
       $('#createUserModal').modal('toggle');
       this.formdata = this.fb.group({
-        'HoTen': ['', Validators.required],
+        'hoten': ['', Validators.required],
         'taikhoan': ['', Validators.required],
-        'matkhau': ['', [this.pwdCheckValidator]],
+        'matkhau': ['', Validators.required],
         'nhaplaimatkhau': ['', Validators.required],
         'role': ['', Validators.required],
       }, {
@@ -151,17 +154,17 @@ export class UserComponent extends BaseComponent implements OnInit {
         this.user = res; 
         console.log(this.user);
           this.formdata = this.fb.group({
-            'HoTen': [this.user.HoTen, Validators.required],
+            'hoten': [this.user.hoTen, Validators.required],
             'taikhoan': [this.user.username, Validators.required],
-            'matkhau': [this.user.passwword, [this.pwdCheckValidator]],
-            'nhaplaimatkhau': [this.user.passwword, Validators.required],
+            'matkhau': [this.user.password,  Validators.required],
+            'nhaplaimatkhau': [this.user.password, Validators.required],
             'role': [this.user.level, Validators.required],
           }, {
             validator: MustMatch('matkhau', 'nhaplaimatkhau')
           }); 
           this.doneSetupForm = true;
         }); 
-    }, 700);
+    }, 100);
   }
 
   closeModal() {
