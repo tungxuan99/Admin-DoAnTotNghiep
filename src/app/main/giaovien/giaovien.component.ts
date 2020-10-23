@@ -1,20 +1,21 @@
-import { MustMatch } from '../../../helpers/must-match.validator';
+import { MustMatch } from '../../helpers/must-match.validator';
 import { Component, Injector, OnInit, ViewChild, Input  } from '@angular/core';
 import { FileUpload } from 'primeng/fileupload';
 import { FormBuilder, Validators} from '@angular/forms';
 import {FormControl, FormGroup} from '@angular/forms' 
-import { BaseComponent } from '../../../lib/base.component';
+import { BaseComponent } from '../../lib/base.component';
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/takeUntil';
 declare var $: any;
+
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css'],
+  selector: 'app-giaovien',
+  templateUrl: './giaovien.component.html',
+  styleUrls: ['./giaovien.component.css']
 })
-export class UserComponent extends BaseComponent implements OnInit {
-  public users: any;
-  public user: any;
+export class GiaovienComponent extends BaseComponent implements OnInit {
+  public giaoviens: any;
+  public giaovien: any;
   public totalRecords:any;
   public pageSize = 3;
   public page = 1;
@@ -32,16 +33,15 @@ export class UserComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.formsearch = this.fb.group({
-      'hoten': [''],
-      'taikhoan': [''],     
+      'hoten': ['']     
     });
    
    this.search();
   }
 
   loadPage(page) { 
-    this._api.post('/api/users/search',{page: page, pageSize: this.pageSize}).takeUntil(this.unsubscribe).subscribe(res => {
-      this.users = res.data;
+    this._api.post('/api/giaovien/search',{page: page, pageSize: this.pageSize}).takeUntil(this.unsubscribe).subscribe(res => {
+      this.giaoviens = res.data;
       this.totalRecords =  res.totalItems;
       this.pageSize = res.pageSize;
       });
@@ -50,21 +50,15 @@ export class UserComponent extends BaseComponent implements OnInit {
   search() { 
     this.page = 1;
     this.pageSize = 5;
-    this._api.post('/api/users/search',{page: this.page, pageSize: this.pageSize, hoten: this.formsearch.get('hoten').value, taikhoan: this.formsearch.get('taikhoan').value}).takeUntil(this.unsubscribe).subscribe(res => {
-      this.users = res.data;
-      console.log(this.users);
+    this._api.post('/api/giaovien/search',{page: this.page, pageSize: this.pageSize, hoten: this.formsearch.get('hoten').value}).takeUntil(this.unsubscribe).subscribe(res => {
+      this.giaoviens = res.data;
+      console.log(this.giaoviens);
       this.totalRecords =  res.totalItems;
       this.pageSize = res.pageSize;
       });
   }
 
-  pwdCheckValidator(control){
-    var filteredStrings = {search:control.value, select:'@#!$%&*'}
-    var result = (filteredStrings.select.match(new RegExp('[' + filteredStrings.search + ']', 'g')) || []).join('');
-    if(control.value.length < 6 || !result){
-        return {matkhau: true};
-    }
-  }
+  
 
   get f() { return this.formdata.controls; }
 
@@ -94,7 +88,7 @@ export class UserComponent extends BaseComponent implements OnInit {
           username:value.taikhoan,
           password:value.matkhau,
           level:value.role,   
-           id:this.user.id,          
+           id:this.giaoviens.id,          
           };
         this._api.post('/api/users/update-user',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Cập nhật thành công');
@@ -113,7 +107,7 @@ export class UserComponent extends BaseComponent implements OnInit {
   }
 
   Reset() {  
-    this.user = null;
+    this.giaovien = null;
     this.formdata = this.fb.group({
       'hoten': ['', Validators.required],
       'taikhoan': ['', Validators.required],
@@ -129,7 +123,7 @@ export class UserComponent extends BaseComponent implements OnInit {
     this.doneSetupForm = false;
     this.showUpdateModal = true;
     this.isCreate = true;
-    this.user = null;
+    this.giaovien = null;
     setTimeout(() => {
       $('#createUserModal').modal('toggle');
       this.formdata = this.fb.group({
@@ -153,14 +147,14 @@ export class UserComponent extends BaseComponent implements OnInit {
     setTimeout(() => {
       $('#createUserModal').modal('toggle');
       this._api.get('/api/users/get-by-id/'+ row.id).takeUntil(this.unsubscribe).subscribe((res:any) => {
-        this.user = res; 
-        console.log(this.user);
+        this.giaovien = res; 
+        console.log(this.giaovien);
           this.formdata = this.fb.group({
-            'hoten': [this.user.hoTen, Validators.required],
-            'taikhoan': [this.user.username, Validators.required],
-            'matkhau': [this.user.password,  Validators.required],
-            'nhaplaimatkhau': [this.user.password, Validators.required],
-            'role': [this.user.level, Validators.required],
+            'hoten': [this.giaovien.hoTen, Validators.required],
+            'taikhoan': [this.giaovien.username, Validators.required],
+            'matkhau': [this.giaovien.password,  Validators.required],
+            'nhaplaimatkhau': [this.giaovien.password, Validators.required],
+            'role': [this.giaovien.level, Validators.required],
           }, {
             validator: MustMatch('matkhau', 'nhaplaimatkhau')
           }); 

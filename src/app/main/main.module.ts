@@ -12,6 +12,12 @@ import { SidebarComponent } from '../layout/sidebar/sidebar.component';
 import { UnauthorizedComponent } from '../shared/unauthorized/unauthorized.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { HocsinhComponent } from './hocsinh/hocsinh.component';
+import { GiaovienComponent } from './giaovien/giaovien.component';
+import { LophocComponent } from './lophoc/lophoc.component';
+import { MonhocComponent } from './monhoc/monhoc.component';
+import { DiemdanhComponent } from './diemdanh/diemdanh.component';
+import { TintucComponent } from './tintuc/tintuc.component';
 
 
 
@@ -25,6 +31,26 @@ export const mainRoutes: Routes = [
         {
           path: 'unauthorized',
           component: UnauthorizedComponent,
+        },
+        {
+          path: 'hocsinh',
+          component: HocsinhComponent,
+        },
+        {
+          path: 'giaovien',
+          component: GiaovienComponent,
+        },
+        {
+          path: 'lophoc',
+          component: LophocComponent,
+        },
+        {
+          path: 'monhoc',
+          component: MonhocComponent,
+        },
+        {
+          path: 'tintuc',
+          component: TintucComponent,
         },
         {
           path: 'user',
@@ -42,6 +68,12 @@ export const mainRoutes: Routes = [
     DashbroadComponent,
     MainComponent,
     SidebarComponent,
+    HocsinhComponent,
+    GiaovienComponent,
+    LophocComponent,
+    MonhocComponent,
+    DiemdanhComponent,
+    TintucComponent,
     
   ],
   imports: [
