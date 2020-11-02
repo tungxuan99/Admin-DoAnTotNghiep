@@ -9,11 +9,11 @@ import 'rxjs/add/operator/takeUntil';
 declare var $: any;
 
 @Component({
-  selector: 'app-diemdanh',
-  templateUrl: './diemdanh.component.html',
-  styleUrls: ['./diemdanh.component.css']
+  selector: 'app-diem',
+  templateUrl: './diem.component.html',
+  styleUrls: ['./diem.component.css']
 })
-export class DiemdanhComponent extends BaseComponent implements OnInit {
+export class DiemComponent extends BaseComponent implements OnInit {
   public giaoviens: any;
   public giaovien: any;
   public totalRecords:any;

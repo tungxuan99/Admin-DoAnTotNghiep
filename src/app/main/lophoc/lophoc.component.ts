@@ -70,26 +70,23 @@ export class LophocComponent extends BaseComponent implements OnInit {
     console.log(this.isCreate);
     if(this.isCreate) { 
         let tmp = {
-           HoTen:value.hoten,
-           username:value.taikhoan,
-           password:value.matkhau,
-           level:value.role,       
+          malophoc: value.tenlop ,
+          tenlophoc:value.tenlop,
+          khoiHoc:value.khoihoc,       
           };
           console.log("okok");
-        this._api.post('/api/users/create-user',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+        this._api.post('/api/lophoc/create-lop-hoc',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Thêm thành công');
           this.search();
           this.closeModal();
           });
     } else { 
         let tmp = {
-          HoTen:value.hoten,
-          username:value.taikhoan,
-          password:value.matkhau,
-          level:value.role,   
-           id:this.lophocs.id,          
+          tenlophoc:value.tenlop,
+          khoiHoc:value.khoihoc,
+          maLopHoc:this.lophocs.maLopHoc,          
           };
-        this._api.post('/api/users/update-user',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+        this._api.post('/api/lophoc/update-lop-hoc',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Cập nhật thành công');
           this.search();
           this.closeModal();
@@ -99,7 +96,8 @@ export class LophocComponent extends BaseComponent implements OnInit {
   } 
 
   onDelete(row) { 
-    this._api.post('/api/users/delete-user',{id:row.id}).takeUntil(this.unsubscribe).subscribe(res => {
+    console.log(row.maLopHoc);
+    this._api.post('/api/lophoc/delete-lop-hoc',{id:row.maLopHoc}).takeUntil(this.unsubscribe).subscribe(res => {
       alert('Xóa thành công');
       this.search(); 
       });
@@ -108,13 +106,8 @@ export class LophocComponent extends BaseComponent implements OnInit {
   Reset() {  
     this.lophoc = null;
     this.formdata = this.fb.group({
-      'hoten': ['', Validators.required],
-      'taikhoan': ['', Validators.required],
-      'matkhau': ['', Validators.required],
-      'nhaplaimatkhau': ['', Validators.required],
-      'role': [this.roles[0].value, Validators.required],
-    }, {
-      validator: MustMatch('matkhau', 'nhaplaimatkhau')
+      'tenlop': ['', Validators.required],
+        'khoihoc': ['', Validators.required],
     }); 
   }
 
@@ -126,15 +119,9 @@ export class LophocComponent extends BaseComponent implements OnInit {
     setTimeout(() => {
       $('#createUserModal').modal('toggle');
       this.formdata = this.fb.group({
-        'hoten': ['', Validators.required],
-        'taikhoan': ['', Validators.required],
-        'matkhau': ['', Validators.required],
-        'nhaplaimatkhau': ['', Validators.required],
-        'role': ['', Validators.required],
-      }, {
-        validator: MustMatch('matkhau', 'nhaplaimatkhau')
+        'tenlop': ['', Validators.required],
+        'khoihoc': ['', Validators.required],
       });
-      this.formdata.get('role').setValue(this.roles[0].value);
       this.doneSetupForm = true;
     });
   }
@@ -145,17 +132,12 @@ export class LophocComponent extends BaseComponent implements OnInit {
     this.isCreate = false;
     setTimeout(() => {
       $('#createUserModal').modal('toggle');
-      this._api.get('/api/users/get-by-id/'+ row.id).takeUntil(this.unsubscribe).subscribe((res:any) => {
+      this._api.get('/api/lophoc/get-by-id/'+ row.id).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.lophoc = res; 
         console.log(this.lophoc);
           this.formdata = this.fb.group({
-            'hoten': [this.lophoc.hoTen, Validators.required],
-            'taikhoan': [this.lophoc.username, Validators.required],
-            'matkhau': [this.lophoc.password,  Validators.required],
-            'nhaplaimatkhau': [this.lophoc.password, Validators.required],
-            'role': [this.lophoc.level, Validators.required],
-          }, {
-            validator: MustMatch('matkhau', 'nhaplaimatkhau')
+            'tenlop': [this.lophoc.tenlophoc, Validators.required],
+            'khoihoc': [this.lophoc.khoiHoc, Validators.required],
           }); 
           this.doneSetupForm = true;
         }); 

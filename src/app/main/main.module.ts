@@ -18,6 +18,7 @@ import { LophocComponent } from './lophoc/lophoc.component';
 import { MonhocComponent } from './monhoc/monhoc.component';
 import { DiemdanhComponent } from './diemdanh/diemdanh.component';
 import { TintucComponent } from './tintuc/tintuc.component';
+import { DiemComponent } from './diem/diem.component';
 
 
 
@@ -53,6 +54,14 @@ export const mainRoutes: Routes = [
           component: TintucComponent,
         },
         {
+          path: 'diemdanh',
+          component: DiemdanhComponent,
+        },
+        {
+          path: 'diem',
+          component: DiemComponent,
+        },
+        {
           path: 'user',
           loadChildren: () =>
             import('./user/user.module').then((m) => m.UserModule),
@@ -74,6 +83,7 @@ export const mainRoutes: Routes = [
     MonhocComponent,
     DiemdanhComponent,
     TintucComponent,
+    DiemComponent,
     
   ],
   imports: [
