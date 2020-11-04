@@ -7,30 +7,68 @@
           </ul>
           <hr class="mb-4" />
         </div>
-          <form  method="post" accept-charset="utf-8">
+          <form *ngIf="check" role="form" [formGroup]="formds"  (ngSubmit)="LayDS()">
             <div class="row">
                 <div class="col-md-4">
                 <label class="col-md-4 col-form-label">Chọn lớp</label>
                 <div class="col-md-4">
-                    <select name="MaLop" class="form-control">
-                    <option value="1">1</option>
+                    <select formControlName="MaLop" class="form-control">
+                    <option *ngFor="let lh of lophocs" value="{{lh.maLopHoc}}">{{lh.tenlophoc}}</option>
                     </select>
                 </div>
                 </div>
                 <div class="col-md-4">
                 <label class="col-md-4 col-form-label">Buổi học</label>
                 <div class="col-md-6">
-                    <select name="Buoi" class="form-control">
-                    <option value="Sang">Sáng</option>
+                    <select formControlName="Buoi" class="form-control">
+                    <option selected value="Sang">Sáng</option>
                     <option value="Chieu">Chiều</option>
                     </select>
                 </div>
                 </div>
             
                 <div class="col-md-2">
-                <button type="submit" class="btn btn-info">Gửi</button>
+                <button (click)="LayDS()" class="btn btn-info">Gửi</button>
                 </div>
           </div>
+          </form>
+
+          <form *ngIf="isCreate" [formGroup]="formdata" (ngSubmit)="onSubmit(formdata.value)" class="form-horizontal">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead class="text-center">
+                        <tr>
+                            <th>TT</th>
+                            <th>Mã học sinh</th>
+                            <th>Tên học sinh</th>
+                            <th>Giới tính</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lh-list" name="lh-list" class="text-center">
+                          <tr *ngFor="let hs of hocsinhs, let i= index" id="hs{{hs.maHS}}"> 
+                            <td>{{i+1}}</td>
+                            <td>{{ hs.maHS }}</td>
+                            <td class="text-left">{{ hs.tenHS }}</td>
+                            <td>{{ hs.gioiTinh }}</td>
+                              <td class="text-center">
+                                <div class="form-group row">
+                                  <div class="col-sm-4">
+                                    <input checked="checked" name="TrangThai{{i}}" id="TrangThai{{i}}" type="radio" value="0" />Có
+                                  </div>
+                                  <div class="col-sm-6">
+                                    <input name="TrangThai{{i}}" id="TrangThai{{i}}" type="radio" value="1" />Không
+                                  </div>
+                                </div> 
+                              </td>
+                          </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-info">Gửi</button>
+                </div>
           </form>
        
     </div>
