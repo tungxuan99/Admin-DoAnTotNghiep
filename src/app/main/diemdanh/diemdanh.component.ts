@@ -6,6 +6,7 @@ import {FormControl, FormGroup} from '@angular/forms'
 import { BaseComponent } from '../../lib/base.component';
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/takeUntil';
+import {formatDate } from '@angular/common';
 declare var $: any;
 
 @Component({
@@ -46,6 +47,24 @@ export class DiemdanhComponent extends BaseComponent implements OnInit {
     
   }
   get f() { return this.formdata.controls; }
+
+  onSubmit(value) {
+    if (this.formdata.invalid) {
+      return;
+    }
+    // var today = $filter('date')(new Date(),'yyyy-MM-dd HH:mm:ss Z');
+    this.hocsinhs.forEach(element => {
+      let tmp = {
+        MaLopHoc: value.tenlop ,
+        Magv:value.tenlop,
+        Buoi:value.khoihoc,
+        NgayDD:value.khoihoc,       
+        };
+      this._api.post('/api/diemdanh/create-diem-danh',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+        });
+    });
+    
+  } 
 
   LayDS(){
     this.check= false;
