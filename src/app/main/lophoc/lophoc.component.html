@@ -65,7 +65,9 @@
             <div class="col-md-6 mb-3">
                <label>Tên lớp</label>
                <input type="text" class="form-control"  formControlName="tenlop" required="">
-               
+               <div *ngIf="submitted && f.tenlop.errors" class="d-flex invalid-feedback">
+                  <div *ngIf="f.tenlop.errors.required">Chưa nhập tên lớp!</div>
+              </div>
             </div>
             <div class="col-md-6 mb-3">
                <label>Khối học</label>

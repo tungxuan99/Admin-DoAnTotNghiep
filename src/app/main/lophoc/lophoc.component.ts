@@ -107,7 +107,7 @@ export class LophocComponent extends BaseComponent implements OnInit {
     this.lophoc = null;
     this.formdata = this.fb.group({
       'tenlop': ['', Validators.required],
-        'khoihoc': ['', Validators.required],
+      'khoihoc': ['', Validators.required],
     }); 
   }
 
