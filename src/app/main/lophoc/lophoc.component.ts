@@ -74,7 +74,6 @@ export class LophocComponent extends BaseComponent implements OnInit {
           tenlophoc:value.tenlop,
           khoiHoc:value.khoihoc,       
           };
-          console.log("okok");
         this._api.post('/api/lophoc/create-lop-hoc',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Thêm thành công');
           this.search();

@@ -3,7 +3,7 @@
        <div class="row justify-content-center">
           <ul class="breadcrumb">
              <li class="breadcrumb-item"><a href="#">Quản lý</a></li>
-             <li class="breadcrumb-item active">Điểm danh</li>
+             <li class="breadcrumb-item active">Điểm</li>
           </ul>
           <hr class="mb-4" />
         </div>
@@ -18,13 +18,12 @@
               </div>
               </div>
               <div class="col-md-4">
-              <label class="col-md-4 col-form-label">Buổi học</label>
-              <div class="col-md-6">
-                  <select formControlName="Buoi" class="form-control">
-                  <option selected value="Sang">Sáng</option>
-                  <option value="Chieu">Chiều</option>
-                  </select>
-              </div>
+              <label class="col-md-4 col-form-label">Môn học</label>
+              <div class="col-md-4">
+                <select formControlName="MonHoc" class="form-control">
+                <option *ngFor="let mh of monhocs" value="{{mh.maMonHoc}}">{{mh.tenMonHoc}}</option>
+                </select>
+            </div>
               </div>
           
               <div class="col-md-2">
@@ -33,7 +32,7 @@
         </div>
         </form>
 
-          <form *ngIf="isCreate" [formGroup]="formdata" (ngSubmit)="onSubmit(formdata.value)" class="form-horizontal">
+          <form *ngIf="isCreate" [formArrayName]="formdata" (ngSubmit)="onSubmit(formdata.value)" class="form-horizontal">
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
                     <thead class="text-center">
@@ -54,10 +53,10 @@
                               <td>{{ hs.maHS }}</td>
                               <td>{{ hs.tenHS }}</td>
                               <td>{{ hs.gioiTinh }}</td>
-                              <td><input type="text" class="form-control" size="5" name="DiemMieng{{i}}" value="" placeholder=""></td>
-                              <td><input type="text" class="form-control"size="5" name="Diem15phut{{i}}" value="" placeholder=""></td>
-                              <td><input type="text" class="form-control"size="5" name="Diem1Tiet{{i}}" value="" placeholder=""></td>
-                              <td><input type="text" class="form-control"size="5" name="DiemHK{{i}}" value="" placeholder=""></td>
+                              <td><input type="text" class="form-control" size="5" formControlName="DiemMieng{{i}}" value="" placeholder=""></td>
+                              <td><input type="text" class="form-control"size="5" formControlName="Diem15phut{{i}}" value="" placeholder=""></td>
+                              <td><input type="text" class="form-control"size="5" formControlName="Diem1Tiet{{i}}" value="" placeholder=""></td>
+                              <td><input type="text" class="form-control"size="5" formControlName="DiemHK{{i}}" value="" placeholder=""></td>
                           </tr>
                     </tbody>
                 </table>

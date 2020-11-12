@@ -67,30 +67,31 @@ export class GiaovienComponent extends BaseComponent implements OnInit {
     if (this.formdata.invalid) {
       return;
     } 
-    console.log("click ok!");
     console.log(this.isCreate);
     if(this.isCreate) { 
         let tmp = {
-           HoTen:value.hoten,
-           username:value.taikhoan,
-           password:value.matkhau,
-           level:value.role,       
+           Magv:value.MaGV,
+           MaMonHoc:value.MaMonHoc,
+           TenGV:value.TenGV,
+           DiaChi:value.DiaChi,
+           SDT: value.SDT,
+           passwordgv: value.PassWord       
           };
-          console.log("okok");
-        this._api.post('/api/users/create-user',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+        this._api.post('/api/giaovien/create-giao-vien',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Thêm thành công');
           this.search();
           this.closeModal();
           });
     } else { 
         let tmp = {
-          HoTen:value.hoten,
-          username:value.taikhoan,
-          password:value.matkhau,
-          level:value.role,   
-           id:this.giaoviens.id,          
+           MaMonHoc:value.MaMonHoc,
+           TenGV:value.TenGV,
+           DiaChi:value.DiaChi,
+           SDT: value.SDT,
+           passwordgv: value.PassWord,   
+           Magv:this.giaovien.magv         
           };
-        this._api.post('/api/users/update-user',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+        this._api.post('/api/giaovien/update-giao-vien',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Cập nhật thành công');
           this.search();
           this.closeModal();
@@ -100,7 +101,7 @@ export class GiaovienComponent extends BaseComponent implements OnInit {
   } 
 
   onDelete(row) { 
-    this._api.post('/api/users/delete-user',{id:row.id}).takeUntil(this.unsubscribe).subscribe(res => {
+    this._api.post('/api/giaovien/delete-giao-vien',{id:row.magv}).takeUntil(this.unsubscribe).subscribe(res => {
       alert('Xóa thành công');
       this.search(); 
       });
@@ -127,15 +128,12 @@ export class GiaovienComponent extends BaseComponent implements OnInit {
     setTimeout(() => {
       $('#createUserModal').modal('toggle');
       this.formdata = this.fb.group({
-        'hoten': ['', Validators.required],
-        'taikhoan': ['', Validators.required],
-        'matkhau': ['', Validators.required],
-        'nhaplaimatkhau': ['', Validators.required],
-        'role': ['', Validators.required],
-      }, {
-        validator: MustMatch('matkhau', 'nhaplaimatkhau')
+        'MaMonHoc': ['', Validators.required],
+        'TenGV': ['',  Validators.required],
+        'DiaChi': ['', Validators.required],
+        'SDT': ['', Validators.required],
+        'PassWord':['', Validators.required]
       });
-      this.formdata.get('role').setValue(this.roles[0].value);
       this.doneSetupForm = true;
     });
   }
@@ -146,17 +144,14 @@ export class GiaovienComponent extends BaseComponent implements OnInit {
     this.isCreate = false;
     setTimeout(() => {
       $('#createUserModal').modal('toggle');
-      this._api.get('/api/users/get-by-id/'+ row.id).takeUntil(this.unsubscribe).subscribe((res:any) => {
+      this._api.get('/api/giaovien/get-by-id/'+ row.magv).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.giaovien = res; 
-        console.log(this.giaovien);
           this.formdata = this.fb.group({
-            'hoten': [this.giaovien.hoTen, Validators.required],
-            'taikhoan': [this.giaovien.username, Validators.required],
-            'matkhau': [this.giaovien.password,  Validators.required],
-            'nhaplaimatkhau': [this.giaovien.password, Validators.required],
-            'role': [this.giaovien.level, Validators.required],
-          }, {
-            validator: MustMatch('matkhau', 'nhaplaimatkhau')
+            'MaMonHoc': [this.giaovien.maMonHoc, Validators.required],
+            'TenGV': [this.giaovien.tengv,  Validators.required],
+            'DiaChi': [this.giaovien.diaChi, Validators.required],
+            'SDT': [this.giaovien.sdt, Validators.required],
+            'PassWord':[this.giaovien.level, Validators.required]
           }); 
           this.doneSetupForm = true;
         }); 

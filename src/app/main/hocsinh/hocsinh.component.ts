@@ -16,6 +16,7 @@ declare var $: any;
 export class HocsinhComponent extends BaseComponent implements OnInit {
   public hocsinh: any;
   public hocsinhs: any;
+  public lophocs:any;
   public totalRecords:any;
   public pageSize = 3;
   public page = 1;
@@ -36,7 +37,10 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
     this.formsearch = this.fb.group({
       'hoten': [''],     
     });
-   
+    this._api.get('/api/lophoc/get-all').takeUntil(this.unsubscribe).subscribe(res => {
+      this.lophocs= res;
+      console.log(this.lophocs);
+      });
    this.search();
   }
 
@@ -70,10 +74,15 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
     console.log(this.isCreate);
     if(this.isCreate) { 
         let tmp = {
-           HoTen:value.hoten,
-           username:value.taikhoan,
-           password:value.matkhau,
-           level:value.role,       
+           MaHS:value.MaHS,
+           MaLopHoc:value.MaLopHoc,
+           TenHS:value.TenHS,
+           GioiTinh:value.GioiTinh,
+           NgaySinh:value.NgaySinh,
+           noisinh: value.NoiSinh,
+           dantoc: value.DanToc,
+           hotencha:value.HoTenCha,
+           hotenme:value.HoTenMe       
           };
           console.log("okok");
         this._api.post('/api/users/create-user',tmp).takeUntil(this.unsubscribe).subscribe(res => {
@@ -83,13 +92,17 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
           });
     } else { 
         let tmp = {
-          HoTen:value.hoten,
-          username:value.taikhoan,
-          password:value.matkhau,
-          level:value.role,   
-           id:this.hocsinh.id,          
+          MaHS:value.MaHS,
+           MaLopHoc:value.MaLopHoc,
+           TenHS:value.TenHS,
+           GioiTinh:value.GioiTinh,
+           NgaySinh:value.NgaySinh,
+           noisinh: value.NoiSinh,
+           dantoc: value.DanToc,
+           hotencha:value.HoTenCha,
+           hotenme:value.HoTenMe          
           };
-        this._api.post('/api/users/update-user',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+        this._api.post('/api/hocsinh/update-hoc-sinh',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Cập nhật thành công');
           this.search();
           this.closeModal();
@@ -99,7 +112,7 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
   } 
 
   onDelete(row) { 
-    this._api.post('/api/users/delete-user',{id:row.id}).takeUntil(this.unsubscribe).subscribe(res => {
+    this._api.post('/api/hocsinh/delete-hoc-sinh',{id:row.maHS}).takeUntil(this.unsubscribe).subscribe(res => {
       alert('Xóa thành công');
       this.search(); 
       });
@@ -108,13 +121,15 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
   Reset() {  
     this.hocsinh = null;
     this.formdata = this.fb.group({
-      'hoten': ['', Validators.required],
-      'taikhoan': ['', Validators.required],
-      'matkhau': ['', Validators.required],
-      'nhaplaimatkhau': ['', Validators.required],
-      'role': [this.roles[0].value, Validators.required],
-    }, {
-      validator: MustMatch('matkhau', 'nhaplaimatkhau')
+      'MaHS': ['', Validators.required],
+      'MaLopHoc': ['', Validators.required],
+      'TenHS': ['', Validators.required],
+      'GioiTinh': ['', Validators.required],
+      'NgaySinh': ['', Validators.required],
+      'NoiSinh': ['', Validators.required],
+      'DanToc': ['', Validators.required],
+      'HoTenCha': ['', Validators.required],
+      'HoTenMe': ['', Validators.required],
     }); 
   }
 
@@ -126,15 +141,17 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
     setTimeout(() => {
       $('#createUserModal').modal('toggle');
       this.formdata = this.fb.group({
-        'hoten': ['', Validators.required],
-        'taikhoan': ['', Validators.required],
-        'matkhau': ['', Validators.required],
-        'nhaplaimatkhau': ['', Validators.required],
-        'role': ['', Validators.required],
-      }, {
-        validator: MustMatch('matkhau', 'nhaplaimatkhau')
+        'MaHS': ['', Validators.required],
+        'MaLopHoc': ['', Validators.required],
+        'TenHS': ['', Validators.required],
+        'GioiTinh': ['', Validators.required],
+        'NgaySinh': ['', Validators.required],
+        'NoiSinh': ['', Validators.required],
+        'DanToc': ['', Validators.required],
+        'HoTenCha': ['', Validators.required],
+        'HoTenMe': ['', Validators.required],
       });
-      this.formdata.get('role').setValue(this.roles[0].value);
+      this.formdata.get('MaLopHoc').setValue(this.lophocs[0].maLopHoc);
       this.doneSetupForm = true;
     });
   }
@@ -145,18 +162,21 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
     this.isCreate = false;
     setTimeout(() => {
       $('#createUserModal').modal('toggle');
-      this._api.get('/api/users/get-by-id/'+ row.id).takeUntil(this.unsubscribe).subscribe((res:any) => {
+      this._api.get('/api/hocsinh/get-by-id/'+ row.maHS).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.hocsinh = res; 
         console.log(this.hocsinh);
           this.formdata = this.fb.group({
-            'hoten': [this.hocsinh.hoTen, Validators.required],
-            'taikhoan': [this.hocsinh.username, Validators.required],
-            'matkhau': [this.hocsinh.password,  Validators.required],
-            'nhaplaimatkhau': [this.hocsinh.password, Validators.required],
-            'role': [this.hocsinh.level, Validators.required],
-          }, {
-            validator: MustMatch('matkhau', 'nhaplaimatkhau')
-          }); 
+            'MaHS': [this.hocsinh.maHS, Validators.required],
+            'MaLopHoc': [this.hocsinh.maLopHoc, Validators.required],
+            'TenHS': [this.hocsinh.tenHS, Validators.required],
+            'GioiTinh': [this.hocsinh.gioiTinh, Validators.required],
+            'NgaySinh': [this.hocsinh.ngaySinh, Validators.required],
+            'NoiSinh': [this.hocsinh.noisinh, Validators.required],
+            'DanToc': [this.hocsinh.dantoc, Validators.required],
+            'HoTenCha': [this.hocsinh.hotencha],
+            'HoTenMe': [this.hocsinh.hotenme],
+          });
+          this.formdata.get('MaLopHoc').setValue(this.hocsinh.maLopHoc); 
           this.doneSetupForm = true;
         }); 
     }, 100);
