@@ -32,7 +32,7 @@
         </div>
         </form>
 
-          <form *ngIf="isCreate" [formArrayName]="formdata" (ngSubmit)="onSubmit(formdata.value)" class="form-horizontal">
+          <form *ngIf="isCreate" [formGroup]="formdata" (ngSubmit)="onSubmit(formdata.value)" class="form-horizontal">
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
                     <thead class="text-center">
@@ -48,16 +48,20 @@
                         </tr>
                     </thead>
                     <tbody id="lh-list" name="lh-list">
-                          <tr *ngFor="let hs of hocsinhs, let i= index" id="hs{{hs.maHS}}"> 
-                              <td>{{i+1}}</td>
-                              <td>{{ hs.maHS }}</td>
-                              <td>{{ hs.tenHS }}</td>
-                              <td>{{ hs.gioiTinh }}</td>
-                              <td><input type="text" class="form-control" size="5" formControlName="DiemMieng{{i}}" value="" placeholder=""></td>
-                              <td><input type="text" class="form-control"size="5" formControlName="Diem15phut{{i}}" value="" placeholder=""></td>
-                              <td><input type="text" class="form-control"size="5" formControlName="Diem1Tiet{{i}}" value="" placeholder=""></td>
-                              <td><input type="text" class="form-control"size="5" formControlName="DiemHK{{i}}" value="" placeholder=""></td>
-                          </tr>
+                        <div formArrayName="diem">
+                            <ng-container *ngFor="let hs of hocsinhs, let i= index, let pr of formarray.controls">
+                            <tr [formGroupName]="i"> 
+                                <td>{{i+1}}</td>
+                                <td>{{ hs.maHS }}</td>
+                                <td>{{ hs.tenHS }}</td>
+                                <td>{{ hs.gioiTinh }}</td>
+                                <td><input type="text" class="form-control" size="5" formControlName="DiemMieng" value="" placeholder=""></td>
+                                <td><input type="text" class="form-control"size="5" formControlName="Diem15phut" value="" placeholder=""></td>
+                                <td><input type="text" class="form-control"size="5" formControlName="Diem1Tiet" value="" placeholder=""></td>
+                                <td><input type="text" class="form-control"size="5" formControlName="DiemHK" value="" placeholder=""></td>
+                            </tr>
+                            </ng-container>
+                        </div>
                     </tbody>
                 </table>
             </div>

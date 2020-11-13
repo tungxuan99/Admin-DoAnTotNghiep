@@ -16,6 +16,7 @@ declare var $: any;
 export class GiaovienComponent extends BaseComponent implements OnInit {
   public giaoviens: any;
   public giaovien: any;
+  public monhocs:any;
   public totalRecords:any;
   public pageSize = 3;
   public page = 1;
@@ -35,7 +36,10 @@ export class GiaovienComponent extends BaseComponent implements OnInit {
     this.formsearch = this.fb.group({
       'hoten': ['']     
     });
-   
+    this._api.get('/api/monhoc/get-all').takeUntil(this.unsubscribe).subscribe(res => {
+      this.monhocs= res;
+      console.log(this.monhocs);
+      });
    this.search();
   }
 
@@ -70,7 +74,6 @@ export class GiaovienComponent extends BaseComponent implements OnInit {
     console.log(this.isCreate);
     if(this.isCreate) { 
         let tmp = {
-           Magv:value.MaGV,
            MaMonHoc:value.MaMonHoc,
            TenGV:value.TenGV,
            DiaChi:value.DiaChi,
@@ -110,13 +113,11 @@ export class GiaovienComponent extends BaseComponent implements OnInit {
   Reset() {  
     this.giaovien = null;
     this.formdata = this.fb.group({
-      'hoten': ['', Validators.required],
-      'taikhoan': ['', Validators.required],
-      'matkhau': ['', Validators.required],
-      'nhaplaimatkhau': ['', Validators.required],
-      'role': [this.roles[0].value, Validators.required],
-    }, {
-      validator: MustMatch('matkhau', 'nhaplaimatkhau')
+      'MaMonHoc': ['', Validators.required],
+        'TenGV': ['',  Validators.required],
+        'DiaChi': ['', Validators.required],
+        'SDT': ['', Validators.required],
+        'PassWord':['', Validators.required]
     }); 
   }
 

@@ -102,21 +102,21 @@
               <div class="col-md-6 mb-3">
                  <label >Ngày sinh</label>
                  <input type="text" class="form-control"  formControlName="NgaySinh" required="">
-                 <div *ngIf="submitted && f.NgaySinh.errors" class="d-flex nvalid-feedback">
+                 <div *ngIf="submitted && f.NgaySinh.errors" class="d-flex valid-feedback">
                     <div *ngIf="f.NgaySinh.errors.required">Ngày sinh là bắt buộc</div>
                  </div>
               </div>
               <div class="col-md-6 mb-3">
                  <label >Nơi sinh</label>
                  <input type="text" class="form-control"  formControlName="NoiSinh" required="">
-                 <div *ngIf="submitted && f.NoiSinh.errors" class="d-flex nvalid-feedback">
+                 <div *ngIf="submitted && f.NoiSinh.errors" class="d-flex valid-feedback">
                     <div *ngIf="f.NoiSinh.errors.required">Nơi sinh là bắt buộc</div>
                  </div>
               </div>
               <div class="col-md-6 mb-3">
                  <label >Dân tộc</label>
                  <input type="text" class="form-control"  formControlName="DanToc" required="">
-                 <div *ngIf="submitted && f.DanToc.errors" class="d-flex nvalid-feedback">
+                 <div *ngIf="submitted && f.DanToc.errors" class="d-flex valid-feedback">
                     <div *ngIf="f.DanToc.errors.required">Dân tộc là bắt buộc</div>
                  </div>
               </div>

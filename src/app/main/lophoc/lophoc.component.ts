@@ -131,13 +131,14 @@ export class LophocComponent extends BaseComponent implements OnInit {
     this.isCreate = false;
     setTimeout(() => {
       $('#createUserModal').modal('toggle');
-      this._api.get('/api/lophoc/get-by-id/'+ row.id).takeUntil(this.unsubscribe).subscribe((res:any) => {
+      this._api.get('/api/lophoc/get-by-id/'+ row.maLopHoc).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.lophoc = res; 
         console.log(this.lophoc);
           this.formdata = this.fb.group({
             'tenlop': [this.lophoc.tenlophoc, Validators.required],
             'khoihoc': [this.lophoc.khoiHoc, Validators.required],
-          }); 
+          });
+          this.formdata.get('khoihoc').setValue(this.lophoc.khoiHoc); 
           this.doneSetupForm = true;
         }); 
     }, 100);

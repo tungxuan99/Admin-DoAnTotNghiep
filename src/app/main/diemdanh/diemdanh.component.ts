@@ -6,7 +6,7 @@ import {FormControl, FormGroup} from '@angular/forms'
 import { BaseComponent } from '../../lib/base.component';
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/takeUntil';
-import {formatDate } from '@angular/common';
+import { DatePipe } from '@angular/common';
 declare var $: any;
 
 @Component({
@@ -29,7 +29,7 @@ export class DiemdanhComponent extends BaseComponent implements OnInit {
   public check: any;
   submitted = false;
   @ViewChild(FileUpload, { static: false }) file_image: FileUpload;
-  constructor(private fb: FormBuilder, injector: Injector) {
+  constructor(private fb: FormBuilder, injector: Injector,private datePipe: DatePipe) {
     super(injector);
   }
 
@@ -52,13 +52,14 @@ export class DiemdanhComponent extends BaseComponent implements OnInit {
     if (this.formdata.invalid) {
       return;
     }
-    // var today = $filter('date')(new Date(),'yyyy-MM-dd HH:mm:ss Z');
+    let date= new Date();
+    let ngay =this.datePipe.transform(date,"yyyy-MM-dd");
     this.hocsinhs.forEach(element => {
       let tmp = {
         MaLopHoc: value.tenlop ,
         Magv:value.tenlop,
         Buoi:value.khoihoc,
-        NgayDD:value.khoihoc,       
+        NgayDD:ngay,       
         };
       this._api.post('/api/diemdanh/create-diem-danh',tmp).takeUntil(this.unsubscribe).subscribe(res => {
         });

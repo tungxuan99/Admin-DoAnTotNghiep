@@ -19,6 +19,7 @@ export class DiemComponent extends BaseComponent implements OnInit {
   public monhocs: any;
   public formds: any;
   public formdata: any;
+  public formarray: any;
   projects: FormArray;
   public isCreate:any;
   public check: any;
@@ -56,24 +57,20 @@ LayDS(){
     this.maMonHoc=this.formds.get('MonHoc').value;
     this._api.get('/api/hocsinh/get-by-lop/'+this.formds.get('MaLop').value).takeUntil(this.unsubscribe).subscribe(res => {
       this.hocsinhs= res;
-        this.formdata = this.fb.array([]
-          );
-        for (let index = 0; index < this.hocsinhs.length; index++) {
-          this.formdata.push(this.createProject(null));
-        }
-          
-        
+        this.formdata= new FormGroup({
+          'diem': new FormArray([this.createProject()])
+        });
+        // for (let index = 0; index < this.hocsinhs.length; index++) {
+        //   this.formdata.push(this.createProject(null));
+        // }
       });
-      
-    // for (let index = 0; index < this.hocsinhs; index++) {
-      
-    // };
-    // this.formdata = this.fb.group({
-      
-    // });  
 
   }
-  createProject(project): FormGroup {
+  get formArray()
+  {
+    return this.formdata.get('diem')
+  }
+  createProject(project?): FormGroup {
     return this.fb.group({
       DiemMieng: project.DiemMieng,
       Diem15Phut: project.Diem15Phut,
@@ -127,21 +124,23 @@ LayDS(){
   }
     
   onSubmit(value){
-    for (let index = 0; index < this.hocsinhs.length; index++) {
-      let maHK="22020";
-      let maMonHoc= this.maMonHoc;
-      let maLopHoc= this.maLopHoc;
-      let maHS= this.hocsinhs[index].maHS;
-      let madiemMieng="DiemMieng"+index;
-      let diemMieng= value.madiemMieng;
-      let madiem15phut="Diem15Phut"+index;
-      let diem15Phut= value.madiem15phut;
-      let madiem1tiet="Diem1Tiet"+index;
-      let diem1Tiet= value.madiem1tiet;
-      let madiemhk="DiemHK"+index;
-      let diemHK= value.madiemhk;
-      console.log(diemHK);
-      // this.CreateDiem(maHS,maHK,maMonHoc,maLopHoc,diemMieng,diem15Phut,diem1Tiet,diemHK);
-    }
+    console.log(value);
+    // for (let index = 0; index < this.hocsinhs.length; index++) {
+    //   let maHK="22020";
+    //   let maMonHoc= this.maMonHoc;
+    //   let maLopHoc= this.maLopHoc;
+    //   let maHS= this.hocsinhs[index].maHS;
+    //   let madiemMieng="DiemMieng"+index;
+    //   let diemMieng= value.madiemMieng;
+    //   let madiem15phut="Diem15Phut"+index;
+    //   let diem15Phut= value.madiem15phut;
+    //   let madiem1tiet="Diem1Tiet"+index;
+    //   let diem1Tiet= value.madiem1tiet;
+    //   let madiemhk="DiemHK"+index;
+    //   let diemHK= value.madiemhk;
+    //   console.log(diemHK);
+      
+    // }
+    // this.CreateDiem(maHS,maHK,maMonHoc,maLopHoc,diemMieng,diem15Phut,diem1Tiet,diemHK);
   }
 }

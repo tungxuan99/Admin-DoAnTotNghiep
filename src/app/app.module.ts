@@ -12,7 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { RoleGuard } from './lib/auth.guard';
 import { Role } from './models/role';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import {DatePipe} from '@angular/common';
 
 
 const routes: Routes = [
@@ -40,7 +40,7 @@ const routes: Routes = [
     NgbModule
   ],
   exports: [RouterModule],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

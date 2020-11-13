@@ -70,26 +70,25 @@ export class MonhocComponent extends BaseComponent implements OnInit {
     console.log(this.isCreate);
     if(this.isCreate) { 
         let tmp = {
-           HoTen:value.hoten,
-           username:value.taikhoan,
-           password:value.matkhau,
-           level:value.role,       
+           MaMonHoc:value.MaMonHoc,
+           TenMonHoc:value.TenMonHoc,
+           SoTiet:value.SoTiet,
+           HeSoMonHoc:value.HeSoMonHoc,       
           };
           console.log("okok");
-        this._api.post('/api/users/create-user',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+        this._api.post('/api/monhoc/create-mon-hoc',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Thêm thành công');
           this.search();
           this.closeModal();
           });
     } else { 
         let tmp = {
-          HoTen:value.hoten,
-          username:value.taikhoan,
-          password:value.matkhau,
-          level:value.role,   
-           id:this.monhocs.id,          
+          MaMonHoc:this.monhoc.maMonHoc,
+           TenMonHoc:value.TenMonHoc,
+           SoTiet:value.SoTiet,
+           HeSoMonHoc:value.HeSoMonHoc,          
           };
-        this._api.post('/api/users/update-user',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+        this._api.post('/api/monhoc/update-mon-hoc',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Cập nhật thành công');
           this.search();
           this.closeModal();
@@ -99,7 +98,7 @@ export class MonhocComponent extends BaseComponent implements OnInit {
   } 
 
   onDelete(row) { 
-    this._api.post('/api/users/delete-user',{id:row.id}).takeUntil(this.unsubscribe).subscribe(res => {
+    this._api.post('/api/monhoc/delete-mon-hoc',{id:row.maMonHoc}).takeUntil(this.unsubscribe).subscribe(res => {
       alert('Xóa thành công');
       this.search(); 
       });
@@ -108,13 +107,10 @@ export class MonhocComponent extends BaseComponent implements OnInit {
   Reset() {  
     this.monhoc = null;
     this.formdata = this.fb.group({
-      'hoten': ['', Validators.required],
-      'taikhoan': ['', Validators.required],
-      'matkhau': ['', Validators.required],
-      'nhaplaimatkhau': ['', Validators.required],
-      'role': [this.roles[0].value, Validators.required],
-    }, {
-      validator: MustMatch('matkhau', 'nhaplaimatkhau')
+      'MaMonHoc': ['', Validators.required],
+      'TenMonHoc': ['', Validators.required],
+      'SoTiet': ['', Validators.required],
+      'HeSoMonHoc': ['', Validators.required],
     }); 
   }
 
@@ -126,15 +122,11 @@ export class MonhocComponent extends BaseComponent implements OnInit {
     setTimeout(() => {
       $('#createUserModal').modal('toggle');
       this.formdata = this.fb.group({
-        'hoten': ['', Validators.required],
-        'taikhoan': ['', Validators.required],
-        'matkhau': ['', Validators.required],
-        'nhaplaimatkhau': ['', Validators.required],
-        'role': ['', Validators.required],
-      }, {
-        validator: MustMatch('matkhau', 'nhaplaimatkhau')
+        'MaMonHoc': ['', Validators.required],
+        'TenMonHoc': ['', Validators.required],
+        'SoTiet': ['', Validators.required],
+        'HeSoMonHoc': ['', Validators.required],
       });
-      this.formdata.get('role').setValue(this.roles[0].value);
       this.doneSetupForm = true;
     });
   }
@@ -145,17 +137,14 @@ export class MonhocComponent extends BaseComponent implements OnInit {
     this.isCreate = false;
     setTimeout(() => {
       $('#createUserModal').modal('toggle');
-      this._api.get('/api/users/get-by-id/'+ row.id).takeUntil(this.unsubscribe).subscribe((res:any) => {
+      this._api.get('/api/monhoc/get-by-id/'+ row.maMonHoc).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.monhoc = res; 
         console.log(this.monhoc);
           this.formdata = this.fb.group({
-            'hoten': [this.monhoc.hoTen, Validators.required],
-            'taikhoan': [this.monhoc.username, Validators.required],
-            'matkhau': [this.monhoc.password,  Validators.required],
-            'nhaplaimatkhau': [this.monhoc.password, Validators.required],
-            'role': [this.monhoc.level, Validators.required],
-          }, {
-            validator: MustMatch('matkhau', 'nhaplaimatkhau')
+            'MaMonHoc': [this.monhoc.maMonHoc, Validators.required],
+            'TenMonHoc': [this.monhoc.tenMonHoc,, Validators.required],
+            'SoTiet': [this.monhoc.soTiet, Validators.required],
+            'HeSoMonHoc': [this.monhoc.heSoMonHoc, Validators.required],
           }); 
           this.doneSetupForm = true;
         }); 

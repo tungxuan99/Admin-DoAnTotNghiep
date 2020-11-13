@@ -6,6 +6,7 @@ import {FormControl, FormGroup} from '@angular/forms'
 import { BaseComponent } from '../../lib/base.component';
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/takeUntil';
+import { DatePipe } from '@angular/common';
 declare var $: any;
 
 @Component({
@@ -28,7 +29,7 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
   public isCreate:any;
   submitted = false;
   @ViewChild(FileUpload, { static: false }) file_image: FileUpload;
-  constructor(private fb: FormBuilder, injector: Injector) {
+  constructor(private fb: FormBuilder, injector: Injector,private datePipe: DatePipe) {
     super(injector);
   }
   
@@ -73,12 +74,13 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
     } 
     console.log(this.isCreate);
     if(this.isCreate) { 
+      let ngay =this.datePipe.transform(value.NgaySinh,"yyyy-MM-dd");
         let tmp = {
            MaHS:value.MaHS,
            MaLopHoc:value.MaLopHoc,
            TenHS:value.TenHS,
            GioiTinh:value.GioiTinh,
-           NgaySinh:value.NgaySinh,
+           NgaySinh:ngay,
            noisinh: value.NoiSinh,
            dantoc: value.DanToc,
            hotencha:value.HoTenCha,
@@ -91,12 +93,13 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
           this.closeModal();
           });
     } else { 
+      let ngay =this.datePipe.transform(value.NgaySinh,"yyyy-MM-dd");
         let tmp = {
           MaHS:value.MaHS,
            MaLopHoc:value.MaLopHoc,
            TenHS:value.TenHS,
            GioiTinh:value.GioiTinh,
-           NgaySinh:value.NgaySinh,
+           NgaySinh:ngay,
            noisinh: value.NoiSinh,
            dantoc: value.DanToc,
            hotencha:value.HoTenCha,
@@ -165,18 +168,19 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
       this._api.get('/api/hocsinh/get-by-id/'+ row.maHS).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.hocsinh = res; 
         console.log(this.hocsinh);
+        let ngay =this.datePipe.transform(this.hocsinh.ngaySinh,"dd-MM-yyyy");
           this.formdata = this.fb.group({
             'MaHS': [this.hocsinh.maHS, Validators.required],
             'MaLopHoc': [this.hocsinh.maLopHoc, Validators.required],
             'TenHS': [this.hocsinh.tenHS, Validators.required],
             'GioiTinh': [this.hocsinh.gioiTinh, Validators.required],
-            'NgaySinh': [this.hocsinh.ngaySinh, Validators.required],
+            'NgaySinh': [ngay, Validators.required],
             'NoiSinh': [this.hocsinh.noisinh, Validators.required],
             'DanToc': [this.hocsinh.dantoc, Validators.required],
             'HoTenCha': [this.hocsinh.hotencha],
             'HoTenMe': [this.hocsinh.hotenme],
           });
-          this.formdata.get('MaLopHoc').setValue(this.hocsinh.maLopHoc); 
+          // this.formdata.get('MaLopHoc').setValue(this.hocsinh.maLopHoc); 
           this.doneSetupForm = true;
         }); 
     }, 100);
