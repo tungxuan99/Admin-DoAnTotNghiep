@@ -19,6 +19,7 @@ import { MonhocComponent } from './monhoc/monhoc.component';
 import { DiemdanhComponent } from './diemdanh/diemdanh.component';
 import { TintucComponent } from './tintuc/tintuc.component';
 import { DiemComponent } from './diem/diem.component';
+import { XemdiemComponent } from './xemdiem/xemdiem.component';
 
 
 
@@ -62,6 +63,10 @@ export const mainRoutes: Routes = [
           component: DiemComponent,
         },
         {
+          path: 'xemdiem',
+          component: XemdiemComponent,
+        },
+        {
           path: 'user',
           loadChildren: () =>
             import('./user/user.module').then((m) => m.UserModule),
@@ -84,6 +89,7 @@ export const mainRoutes: Routes = [
     DiemdanhComponent,
     TintucComponent,
     DiemComponent,
+    XemdiemComponent,
     
   ],
   imports: [
