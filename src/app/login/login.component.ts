@@ -61,7 +61,12 @@ export class LoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         (data) => {
+          if(this.authenticationService.userValue.level=='Admin' ||this.authenticationService.userValue.level=='User')
+          {
           this.router.navigate([this.returnUrl]);
+          }else{
+            this.router.navigate(['xemdiem']);
+          }
         },
         (error) => {
           this.error = error;

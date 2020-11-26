@@ -1,4 +1,4 @@
-import { NgModule} from '@angular/core';
+import { forwardRef, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainComponent } from './main.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -20,6 +20,8 @@ import { DiemdanhComponent } from './diemdanh/diemdanh.component';
 import { TintucComponent } from './tintuc/tintuc.component';
 import { DiemComponent } from './diem/diem.component';
 import { XemdiemComponent } from './xemdiem/xemdiem.component';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { XemdiemhkComponent } from './xemdiemhk/xemdiemhk.component';
 
 
 
@@ -29,6 +31,8 @@ export const mainRoutes: Routes = [
       children: [
         {
             path: '', component: DashbroadComponent,
+            canActivate: [RoleGuard],
+          data: { roles: [Role.Admin, Role.User] },
         },
         {
           path: 'unauthorized',
@@ -37,40 +41,70 @@ export const mainRoutes: Routes = [
         {
           path: 'hocsinh',
           component: HocsinhComponent,
+          canActivate: [RoleGuard],
+          data: { roles: [Role.Admin] },
         },
         {
           path: 'giaovien',
           component: GiaovienComponent,
+          canActivate: [RoleGuard],
+          data: { roles: [Role.Admin] },
         },
         {
           path: 'lophoc',
           component: LophocComponent,
+          canActivate: [RoleGuard],
+          data: { roles: [Role.Admin] },
         },
         {
           path: 'monhoc',
           component: MonhocComponent,
+          canActivate: [RoleGuard],
+          data: { roles: [Role.Admin] },
         },
         {
           path: 'tintuc',
           component: TintucComponent,
+          canActivate: [RoleGuard],
+          data: { roles: [Role.Admin] },
         },
         {
           path: 'diemdanh',
           component: DiemdanhComponent,
+          canActivate: [RoleGuard],
+          data: { roles: [Role.Admin, Role.User] },
         },
         {
           path: 'diem',
           component: DiemComponent,
+          canActivate: [RoleGuard],
+          data: { roles: [Role.Admin, Role.User] },
         },
         {
           path: 'xemdiem',
           component: XemdiemComponent,
+          canActivate: [RoleGuard],
+          data: { roles: [Role.Student] },
+        },
+        {
+          path: 'xemdiemhk',
+          component: XemdiemhkComponent,
+          canActivate: [RoleGuard],
+          data: { roles: [Role.Student] },
         },
         {
           path: 'user',
           loadChildren: () =>
             import('./user/user.module').then((m) => m.UserModule),
           canActivate: [RoleGuard],
+          data: { roles: [Role.Admin] },
+        },
+        {
+          path: 'thongke',
+          loadChildren: () =>
+            import('../main/thongke/thongke.module').then((m) => m.ThongkeModule),
+          canActivate: [RoleGuard],
+          data: { roles: [Role.Admin] },
         },
       ]
   }
@@ -90,6 +124,7 @@ export const mainRoutes: Routes = [
     TintucComponent,
     DiemComponent,
     XemdiemComponent,
+    XemdiemhkComponent
     
   ],
   imports: [
@@ -101,6 +136,6 @@ export const mainRoutes: Routes = [
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA
-  ]
+  ],
 })
 export class MainModule { }

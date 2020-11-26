@@ -1,6 +1,7 @@
 <sidebar id="sidebar" class="app-sidebar">
     <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
        <div class="menu">
+         <ng-container *ngIf="role=='Admin'|| role=='User'">
           <div class="menu-header">Navigation</div>
           <div class="menu-item active">
              <a [routerLink]="['/']" class="menu-link">
@@ -8,12 +9,16 @@
              <span class="menu-text">Dashboard</span>
              </a>
           </div>
-          <div class="menu-item">
-             <a [routerLink]="['/hocsinh']"  class="menu-link">
-             <span class="menu-icon"><i class="fa fa-chart-pie"></i></span>
-             <span class="menu-text">Học sinh</span>
-             </a>
-          </div>
+         </ng-container>
+          <ng-container *ngIf="role=='Admin'">
+            <div class="menu-item">
+               <a [routerLink]="['/hocsinh']"  class="menu-link">
+               <span class="menu-icon"><i class="fa fa-chart-pie"></i></span>
+               <span class="menu-text">Học sinh</span>
+               </a>
+            </div>
+         </ng-container>
+         <ng-container *ngIf="role=='Admin'">
           <div class="menu-item">
             <a [routerLink]="['/giaovien']"  class="menu-link">
             <span class="menu-icon"><i class="fa fa-heart"></i></span>
@@ -28,13 +33,15 @@
          </div>
          <div class="menu-item">
             <a [routerLink]="['/lophoc']"  class="menu-link">
-            <span class="menu-icon"><i class="fa fa-qrcode"></i></span>
+            <span class="menu-icon"><i class="fa fa-book"></i></span>
             <span class="menu-text">Lớp học</span>
             </a>
          </div>
+      </ng-container>
+      <ng-container *ngIf="role=='Admin'|| role=='User'">
          <div class="menu-item">
             <a [routerLink]="['/diemdanh']"  class="menu-link">
-            <span class="menu-icon"><i class="fa fa-qrcode"></i></span>
+            <span class="menu-icon"><i class="fa fa-address-book"></i></span>
             <span class="menu-text">Điểm danh</span>
             </a>
          </div>
@@ -44,12 +51,43 @@
             <span class="menu-text">Điểm</span>
             </a>
          </div>
+      </ng-container>
+      <ng-container *ngIf="role=='Admin'">
          <div class="menu-item">
             <a [routerLink]="['/user/user']"  class="menu-link">
-            <span class="menu-icon"><i class="fa fa-qrcode"></i></span>
+            <span class="menu-icon"><i class="fa fa-user-circle"></i></span>
             <span class="menu-text">Tài khoản</span>
             </a>
          </div>
+         <div class="menu-item has-sub expand">
+            <a href="#" class="menu-link">
+            <span class="menu-icon"><i class="fa fa-tasks"></i></span>
+            <span class="menu-text">Thống kê</span>
+            <span class="menu-caret"><b class="caret"></b></span>
+            </a>
+            <div class="menu-submenu" style="display: block;">
+               <div class="menu-item">
+                  <a [routerLink]="['/thongke/top10diem']"  class="menu-link">
+                     <span class="menu-text">Top điểm</span>
+                  </a>
+               </div>
+            </div>
+         </div>
+      </ng-container>
+      <ng-container *ngIf="role=='Student'">
+         <div class="menu-item">
+            <a [routerLink]="['/xemdiem']"  class="menu-link">
+            <span class="menu-icon"><i class="fa fa-address-book"></i></span>
+            <span class="menu-text">Xem điểm</span>
+            </a>
+         </div>
+         <div class="menu-item">
+            <a [routerLink]="['/xemdiemhk']"  class="menu-link">
+            <span class="menu-icon"><i class="fa fa-qrcode"></i></span>
+            <span class="menu-text">Tra điểm học kỳ</span>
+            </a>
+         </div>
+      </ng-container>
        </div>
     </div>
     <button class="app-sidebar-mobile-backdrop" data-dismiss="sidebar-mobile"></button>

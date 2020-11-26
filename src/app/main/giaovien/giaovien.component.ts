@@ -2,7 +2,7 @@ import { MustMatch } from '../../helpers/must-match.validator';
 import { Component, Injector, OnInit, ViewChild, Input  } from '@angular/core';
 import { FileUpload } from 'primeng/fileupload';
 import { FormBuilder, Validators} from '@angular/forms';
-import {FormControl, FormGroup} from '@angular/forms' 
+import {FormControl, FormGroup} from '@angular/forms'; 
 import { BaseComponent } from '../../lib/base.component';
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/takeUntil';
@@ -119,6 +119,7 @@ export class GiaovienComponent extends BaseComponent implements OnInit {
         'SDT': ['', Validators.required],
         'PassWord':['', Validators.required]
     }); 
+    this.formdata.get('MaMonHoc').setValue(this.monhocs[0].maMonHoc);
   }
 
   createModal() {
@@ -135,6 +136,7 @@ export class GiaovienComponent extends BaseComponent implements OnInit {
         'SDT': ['', Validators.required],
         'PassWord':['', Validators.required]
       });
+      this.formdata.get('MaMonHoc').setValue(this.monhocs[0].maMonHoc);
       this.doneSetupForm = true;
     });
   }
@@ -147,12 +149,13 @@ export class GiaovienComponent extends BaseComponent implements OnInit {
       $('#createUserModal').modal('toggle');
       this._api.get('/api/giaovien/get-by-id/'+ row.magv).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.giaovien = res; 
+        console.log(this.giaovien);
           this.formdata = this.fb.group({
             'MaMonHoc': [this.giaovien.maMonHoc, Validators.required],
             'TenGV': [this.giaovien.tengv,  Validators.required],
             'DiaChi': [this.giaovien.diaChi, Validators.required],
             'SDT': [this.giaovien.sdt, Validators.required],
-            'PassWord':[this.giaovien.level, Validators.required]
+            'PassWord':[this.giaovien.passwordgv, Validators.required]
           }); 
           this.doneSetupForm = true;
         }); 

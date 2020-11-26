@@ -19,7 +19,6 @@ export class DiemComponent extends BaseComponent implements OnInit {
   public monhocs: any;
   public formds: any;
   public formdata: any;
-  public formarray: any;
   projects: FormArray;
   public isCreate:any;
   public check: any;
@@ -31,22 +30,24 @@ export class DiemComponent extends BaseComponent implements OnInit {
     super(injector);
   }
 
-  ngOnInit(): void {this.formds = this.fb.group({
+  ngOnInit(): void {
+    this.formds = this.fb.group({
     'MaLop': [''],
     'MonHoc': [''],     
   });
+  
   
   this.check=true;
   this.isCreate=false;
   this._api.get('/api/lophoc/get-all').takeUntil(this.unsubscribe).subscribe(res => {
     this.lophocs= res;
-    console.log(this.lophocs);
+    this.formds.get('MaLop').setValue(this.lophocs[0].maLopHoc);
+    
     });
-    this._api.get('/api/monhoc/get-all').takeUntil(this.unsubscribe).subscribe(res => {
+  this._api.get('/api/monhoc/get-all').takeUntil(this.unsubscribe).subscribe(res => {
       this.monhocs= res;
-      console.log(this.monhocs);
+      this.formds.get('MonHoc').setValue(this.monhocs[0].maMonHoc);
       });
-  
 }
 get f() { return this.formdata.controls; }
 
@@ -56,28 +57,11 @@ LayDS(){
     this.maLopHoc=this.formds.get('MaLop').value;
     this.maMonHoc=this.formds.get('MonHoc').value;
     this._api.get('/api/hocsinh/get-by-lop/'+this.formds.get('MaLop').value).takeUntil(this.unsubscribe).subscribe(res => {
-      this.hocsinhs= res;
-        this.formdata= new FormGroup({
-          'diem': new FormArray([this.createProject()])
-        });
-        // for (let index = 0; index < this.hocsinhs.length; index++) {
-        //   this.formdata.push(this.createProject(null));
-        // }
+        this.hocsinhs= res;
       });
 
   }
-  get formArray()
-  {
-    return this.formdata.get('diem')
-  }
-  createProject(project?): FormGroup {
-    return this.fb.group({
-      DiemMieng: project.DiemMieng,
-      Diem15Phut: project.Diem15Phut,
-      Diem1Tiet:project.Diem1Tiet,
-      DiemHK:project.DiemHK
-    });
-  }
+  
    CreateDiem(maHS: any, maHocKy: any, maMonHoc: any,
              maLopHoc: any, diemMieng: string, diem15Phut: string,
              diem1Tiet: string, diemHK: string ){
@@ -123,24 +107,30 @@ LayDS(){
       });
   }
     
-  onSubmit(value){
-    console.log(value);
-    // for (let index = 0; index < this.hocsinhs.length; index++) {
-    //   let maHK="22020";
-    //   let maMonHoc= this.maMonHoc;
-    //   let maLopHoc= this.maLopHoc;
-    //   let maHS= this.hocsinhs[index].maHS;
-    //   let madiemMieng="DiemMieng"+index;
-    //   let diemMieng= value.madiemMieng;
-    //   let madiem15phut="Diem15Phut"+index;
-    //   let diem15Phut= value.madiem15phut;
-    //   let madiem1tiet="Diem1Tiet"+index;
-    //   let diem1Tiet= value.madiem1tiet;
-    //   let madiemhk="DiemHK"+index;
-    //   let diemHK= value.madiemhk;
-    //   console.log(diemHK);
+  onSubmit(form: any): void{
+    console.log(form);
+    for (let index = 0; index < this.hocsinhs.length; index++) {
+
+
+
+    }
+
+    for (let index = 0; index < this.hocsinhs.length; index++) {
+      let maHK="22020";
+      let maMonHoc= this.maMonHoc;
+      let maLopHoc= this.maLopHoc;
+      let maHS= this.hocsinhs[index].maHS;
+      let madiemMieng="DiemMieng"+index;
+      let diemMieng= form.$madiemMieng;
+      let madiem15phut="Diem15Phut"+index;
+      // let diem15Phut= form[2];
+      let madiem1tiet="Diem1Tiet"+index;
+      let diem1Tiet= form.madiem1tiet;
+      let madiemhk="DiemHK"+index;
+      let diemHK= form.madiemhk;
+      console.log(diemMieng);
       
-    // }
+    }
     // this.CreateDiem(maHS,maHK,maMonHoc,maLopHoc,diemMieng,diem15Phut,diem1Tiet,diemHK);
   }
 }

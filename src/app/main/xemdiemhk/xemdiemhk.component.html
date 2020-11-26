@@ -1,0 +1,51 @@
+<div id="content" class="app-content">
+    <div class="container">
+       <div class="row justify-content-center">
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="#">Xem điểm</a></li>
+             <li class="breadcrumb-item active">Bảng điểm</li>
+          </ul>
+          <hr class="mb-4" />
+            <div class="col-md-12">
+                <form class="form-horizontal" [formGroup]="formsearch"  (ngSubmit)="search()">
+                  <div class="row form-group">
+                    <div class="col-sm-6">
+                        <input formControlName="Search" class="form-control"  type="text" placeholder="Nhập mã sinh viên hoặc họ tên" style="width: 100%;" />
+                    </div>
+                    <div class="col-sm-3">
+                        <button (click)="search()" class="btn btn-sm btn-primary">Tìm kiếm</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="text-center">
+                    <tr>
+                        <th>TT</th>
+                        <th>Mã học sinh</th>
+                        <th>Tên học sinh</th>
+                        <th>Ngày sinh</th>
+                        <th>Giới tính</th>
+                        <th *ngFor="let mh of mon">{{mh.tenMonHoc}}</th>
+                    </tr>
+                </thead>
+                <tbody id="lh-list" name="lh-list">
+                        <ng-container *ngFor="let hs of hocsinh, let i= index">
+                        <tr style="text-align: center;"> 
+                            <td>{{i+1}}</td>
+                            <td>{{ hs.maHS }}</td>
+                            <td>{{ hs.tenHS }}</td>
+                            <td>{{ hs.ngaySinh | date: 'dd/MM/yyyy' }}</td>
+                            <td>{{ hs.gioiTinh }}</td>
+                            <ng-container *ngFor="let d of diems">
+                                    <td *ngIf="hs.maHS==d.maHS">{{d.diemHK}}</td>
+                            </ng-container>
+                        </tr>
+                        </ng-container>
+                </tbody>
+            </table>
+        </div>
+       </div>
+    </div>
+</div>

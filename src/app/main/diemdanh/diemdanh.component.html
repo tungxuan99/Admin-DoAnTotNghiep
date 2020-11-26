@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-md-4">
                 <label class="col-md-4 col-form-label">Chọn lớp</label>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <select formControlName="MaLop" class="form-control">
                     <option *ngFor="let lh of lophocs" value="{{lh.maLopHoc}}">{{lh.tenlophoc}}</option>
                     </select>
@@ -21,7 +21,7 @@
                 <label class="col-md-4 col-form-label">Buổi học</label>
                 <div class="col-md-6">
                     <select formControlName="Buoi" class="form-control">
-                    <option value="Sang" selected>Sáng</option>
+                    <option value="Sang">Sáng</option>
                     <option value="Chieu">Chiều</option>
                     </select>
                 </div>
@@ -33,7 +33,7 @@
           </div>
           </form>
 
-          <form *ngIf="isCreate" [formGroup]="formdata" (ngSubmit)="onSubmit(formdata.value)" class="form-horizontal">
+          <form *ngIf="isCreate" novalidate #form="ngForm" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
             <div class="table-responsive">
                 <table class="table table-bordered table-striped table-hover">
                     <thead class="text-center">
@@ -54,10 +54,10 @@
                               <td class="text-center">
                                 <div class="form-group row">
                                   <div class="col-sm-4">
-                                    <input checked="checked" name="TrangThai{{i}}" id="TrangThai{{i}}" type="radio" value="0" />Có
+                                    <input  name="{{i}}" id="{{i}}" ngModel type="radio" value="0" checked="checked"/>Có
                                   </div>
                                   <div class="col-sm-6">
-                                    <input name="TrangThai{{i}}" id="TrangThai{{i}}" type="radio" value="1" />Không
+                                    <input name="{{i}}" id="{{i}}" ngModel type="radio" ngModel value="1" />Không
                                   </div>
                                 </div> 
                               </td>

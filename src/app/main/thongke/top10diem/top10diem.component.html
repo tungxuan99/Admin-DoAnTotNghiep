@@ -1,0 +1,37 @@
+<div id="content" class="app-content">
+    <div class="container">
+       <div class="row justify-content-center">
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="#">Top điểm</a></li>
+             <li class="breadcrumb-item active">Theo học kỳ</li>
+          </ul>
+          <hr class="mb-4" />
+          <div class="nav-search">
+            <p class="pull-right no-margin">
+                <select  (change)="changed($event.target.value)">
+                    <option  [value]="12019">Kỳ 1 năm học 2019-2020</option>
+                    <option  [value]="22019" selected>Kỳ 2 năm học 2019-2020</option>
+                </select>
+            </p>
+          </div>
+          <table class="table table-striped table-bordered">
+              <thead style="text-align: center;">
+                <tr>
+                    <th scope="col">STT</th>
+                    <th scope="col">Mã học sinh</th>
+                    <th scope="col">Tên học sinh</th>
+                    <th scope="col">Điểm trung bình</th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr *ngFor="let item of hocsinhs, let i =index">
+                  <td style="text-align: center;">{{i+1}}</td>
+                  <td style="text-align: center;">{{ item.maHS}}</td>
+                  <td>{{ item.tenHS }}</td>
+                  <td style="text-align: center;">{{ item.diemTB }}</td>
+                </tr>
+              </tbody>
+          </table>
+       </div>
+    </div>
+</div>

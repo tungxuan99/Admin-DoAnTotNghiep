@@ -84,10 +84,11 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
            noisinh: value.NoiSinh,
            dantoc: value.DanToc,
            hotencha:value.HoTenCha,
-           hotenme:value.HoTenMe       
+           hotenme:value.HoTenMe,
+           passwordhs: value.Password          
           };
           console.log("okok");
-        this._api.post('/api/users/create-user',tmp).takeUntil(this.unsubscribe).subscribe(res => {
+        this._api.post('/api/hocsinh/create-hoc-sinh',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Thêm thành công');
           this.search();
           this.closeModal();
@@ -103,7 +104,8 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
            noisinh: value.NoiSinh,
            dantoc: value.DanToc,
            hotencha:value.HoTenCha,
-           hotenme:value.HoTenMe          
+           hotenme:value.HoTenMe,
+           passwordhs: value.Password          
           };
         this._api.post('/api/hocsinh/update-hoc-sinh',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Cập nhật thành công');
@@ -133,6 +135,7 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
       'DanToc': ['', Validators.required],
       'HoTenCha': ['', Validators.required],
       'HoTenMe': ['', Validators.required],
+      'Password': ['', Validators.required],
     }); 
   }
 
@@ -153,6 +156,7 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
         'DanToc': ['', Validators.required],
         'HoTenCha': ['', Validators.required],
         'HoTenMe': ['', Validators.required],
+        'Password': ['', Validators.required],
       });
       this.formdata.get('MaLopHoc').setValue(this.lophocs[0].maLopHoc);
       this.doneSetupForm = true;
@@ -179,6 +183,7 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
             'DanToc': [this.hocsinh.dantoc, Validators.required],
             'HoTenCha': [this.hocsinh.hotencha],
             'HoTenMe': [this.hocsinh.hotenme],
+            'Password': [this.hocsinh.passwordhs, Validators.required],
           });
           // this.formdata.get('MaLopHoc').setValue(this.hocsinh.maLopHoc); 
           this.doneSetupForm = true;

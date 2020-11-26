@@ -3,7 +3,7 @@ export class User {
     id: number;
     username: string;
     password: string;
-    HoTen: string;
-    role: Role;
+    hoTen: string;
+    level: Role;
     token?: string;
 }
