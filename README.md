@@ -29,3 +29,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ```javascript
 alert("Đồ án");
 ```
+1. Điều 1
+1. Điều 2
+1. Điều 3
