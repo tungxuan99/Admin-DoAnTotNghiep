@@ -1,7 +1,7 @@
 import { MustMatch } from '../../helpers/must-match.validator';
 import { Component, Injector, OnInit, ViewChild, Input  } from '@angular/core';
 import { FileUpload } from 'primeng/fileupload';
-import { FormBuilder, Validators} from '@angular/forms';
+import { FormArray, FormBuilder, Validators} from '@angular/forms';
 import {FormControl, FormGroup} from '@angular/forms' 
 import { BaseComponent } from '../../lib/base.component';
 import { Observable } from 'rxjs/Observable'
@@ -25,6 +25,7 @@ export class DiemdanhComponent extends BaseComponent implements OnInit {
   public uploadedFiles: any[] = [];
   public formds: any;
   public formdata: any;
+  public DSHS: FormArray;
   public doneSetupForm: any;  
   public showUpdateModal:any;
   public isCreate:any;
@@ -68,16 +69,6 @@ export class DiemdanhComponent extends BaseComponent implements OnInit {
           this.diemdanh=res;
         });
       });
-    let i:number=0;
-    for (let index = 0; index < this.hocsinhs.length; index++) {
-      let tmp = {
-        MaDD:this.diemdanh[0].maDD,
-        MaHS:this.hocsinhs[index].maHS,
-        // TrangThai:form.,       
-        };
-        console.log(tmp);
-      
-    }
       
     
   } 
@@ -89,8 +80,27 @@ export class DiemdanhComponent extends BaseComponent implements OnInit {
     this.MaLop=this.formds.get('MaLop').value;
     this._api.get('/api/hocsinh/get-by-lop/'+this.formds.get('MaLop').value).takeUntil(this.unsubscribe).subscribe(res => {
       this.hocsinhs= res;
+      this.formdata=this.fb.group({
+        'Buoi':[this.Buoi],
+        'MaLop': [this.MaLop],
+        DSHS: this.fb.array([])
+        });
+        this.hocsinhs.forEach(element => {
+          this.DSHSList.push(this.addDS(element.maHS, element.tenHS, element.gioiTinh));
+        });
       });
 
   }
+  addDS(maHS, tenHS, gioiTinh): FormGroup {
+    return this.fb.group({
+      MaHS: [maHS],
+      TenHS: [tenHS],
+      GioiTinh: [gioiTinh],
+      TrangThai: [''],
+    });
+  }
+  get DSHSList() {
+    return this.formdata.get('DSHS') as FormArray;
+ }
 
 }

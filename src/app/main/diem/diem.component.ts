@@ -19,7 +19,8 @@ export class DiemComponent extends BaseComponent implements OnInit {
   public monhocs: any;
   public formds: any;
   public formdata: any;
-  projects: FormArray;
+  public formDiem: any;
+  DSDiem: FormArray;
   public isCreate:any;
   public check: any;
   public maMonHoc: any;
@@ -58,8 +59,31 @@ LayDS(){
     this.maMonHoc=this.formds.get('MonHoc').value;
     this._api.get('/api/hocsinh/get-by-lop/'+this.formds.get('MaLop').value).takeUntil(this.unsubscribe).subscribe(res => {
         this.hocsinhs= res;
+        this.formDiem= this.fb.group({
+            'MaLopHoc':[this.maLopHoc],
+            'MaMonHoc':[this.maMonHoc],
+            DSDiem: this.fb.array([])
+        });
+        this.hocsinhs.forEach(element => {
+          this.DSDiemList.push(this.addDS(element.maHS, element.tenHS, element.gioiTinh));
+        });
+        console.log(this.formDiem.value);
       });
 
+  }
+  get DSDiemList() {
+    return this.formDiem.get('DSDiem') as FormArray;
+ }
+  addDS(maHS, tenHS, gioiTinh): FormGroup {
+    return this.fb.group({
+      MaHS: [maHS],
+      TenHS: [tenHS],
+      GioiTinh: [gioiTinh],
+      DiemMieng: [''],
+      Diem15Phut: [''],
+      Diem1Tiet: [''],
+      DiemHocKy: [''],
+    });
   }
   
    CreateDiem(maHS: any, maHocKy: any, maMonHoc: any,
@@ -98,39 +122,28 @@ LayDS(){
       MaHS:maHS,
       MaLopHoc:maLopHoc,
       DiemMieng:diemMieng,
-      Diem15P:diem15Phut,
+      Diem15Phut:diem15Phut,
+      Diem1Tiet:diem1Tiet,
       DiemHK:diemHK,
       DiemTB:DiemTB
     };
     this._api.post('/api/diem/create-diem',data).takeUntil(this.unsubscribe).subscribe(res => {
-      console.log("ok");
       });
   }
     
   onSubmit(form: any): void{
-    console.log(form);
-    for (let index = 0; index < this.hocsinhs.length; index++) {
-
-
-
-    }
-
-    for (let index = 0; index < this.hocsinhs.length; index++) {
+    console.log(form.DSDiem);
+    (form.DSDiem).forEach(element => {
       let maHK="22020";
-      let maMonHoc= this.maMonHoc;
-      let maLopHoc= this.maLopHoc;
-      let maHS= this.hocsinhs[index].maHS;
-      let madiemMieng="DiemMieng"+index;
-      let diemMieng= form.$madiemMieng;
-      let madiem15phut="Diem15Phut"+index;
-      // let diem15Phut= form[2];
-      let madiem1tiet="Diem1Tiet"+index;
-      let diem1Tiet= form.madiem1tiet;
-      let madiemhk="DiemHK"+index;
-      let diemHK= form.madiemhk;
-      console.log(diemMieng);
-      
-    }
-    // this.CreateDiem(maHS,maHK,maMonHoc,maLopHoc,diemMieng,diem15Phut,diem1Tiet,diemHK);
+      let maMonHoc= form.MaMonHoc;
+      let maLopHoc= form.MaLopHoc;
+      let maHS= element.MaHS;
+      let diemMieng=element.DiemMieng;
+      let diem15Phut= element.Diem15Phut;
+      let diem1Tiet= element.Diem1Tiet;
+      let diemHK= element.DiemHocKy;
+      this.CreateDiem(maHS,maHK,maMonHoc,maLopHoc,diemMieng,diem15Phut,diem1Tiet,diemHK);
+    });
+    alert("Thêm điểm thành công!");
   }
 }

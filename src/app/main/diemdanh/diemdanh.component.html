@@ -33,9 +33,10 @@
           </div>
           </form>
 
-          <form *ngIf="isCreate" novalidate #form="ngForm" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
+          <form *ngIf="isCreate" [formGroup]="formdata" role="form" (ngSubmit)="onSubmit(formdata.value)" class="form-horizontal">
             <div class="table-responsive">
-                <table class="table table-bordered table-striped table-hover">
+              <div formArrayName="DSHS" >
+                <table class="table table-bordered  table-hover">
                     <thead class="text-center">
                         <tr>
                             <th>TT</th>
@@ -45,31 +46,32 @@
                             <th>Trạng thái</th>
                         </tr>
                     </thead>
-                    <tbody id="lh-list" name="lh-list" class="text-center">
-                          <tr *ngFor="let hs of hocsinhs, let i= index" id="hs{{hs.maHS}}"> 
+                    <tbody class="text-center">
+                      <ng-container *ngFor="let item of formdata.get('DSHS').controls; let i = index;">
+                          <tr [formGroupName]="i"> 
                             <td>{{i+1}}</td>
-                            <td>{{ hs.maHS }}</td>
-                            <td class="text-left">{{ hs.tenHS }}</td>
-                            <td>{{ hs.gioiTinh }}</td>
+                            <td><input type="text" class="form-control" size="6" formControlName="MaHS" readonly></td>
+                            <td class="text-left"><input type="text" class="form-control" formControlName="TenHS" readonly></td>
+                            <td><input type="text" class="form-control" size="3" formControlName="GioiTinh" readonly></td>
                               <td class="text-center">
                                 <div class="form-group row">
                                   <div class="col-sm-4">
-                                    <input  name="{{i}}" id="{{i}}" ngModel type="radio" value="0" checked="checked"/>Có
+                                    <input   type="radio" formControlName="TrangThai" value="0" checked/>Có
                                   </div>
                                   <div class="col-sm-6">
-                                    <input name="{{i}}" id="{{i}}" ngModel type="radio" ngModel value="1" />Không
+                                    <input  type="radio" formControlName="TrangThai" value="1" />Không
                                   </div>
                                 </div> 
                               </td>
                           </tr>
+                        </ng-container>
                     </tbody>
                 </table>
+              </div>
             </div>
-            
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-info">Gửi</button>
                 </div>
           </form>
-       
     </div>
 </div>

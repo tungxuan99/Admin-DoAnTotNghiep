@@ -32,8 +32,9 @@
         </div>
         </form>
 
-          <form *ngIf="isCreate" novalidate #form="ngForm" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
+          <form *ngIf="isCreate" [formGroup]="formDiem" role="form"  (ngSubmit)="onSubmit(formDiem.value)" class="form-horizontal">
             <div class="table-responsive">
+                <div formArrayName="DSDiem" >
                 <table class="table table-bordered table-striped">
                     <thead class="text-center">
                         <tr>
@@ -48,18 +49,27 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let hs of hocsinhs, let i= index"> 
-                            <td>{{i+1}}</td>
-                            <td>{{ hs.maHS }}</td>
-                            <td>{{ hs.tenHS }}</td>
-                            <td>{{ hs.gioiTinh }}</td>
-                            <td><input type="text" class="form-control" size="5" name="{{'DiemMieng'+i}}"ngModel placeholder=""></td>
-                            <td><input type="text" class="form-control"size="5" name="{{'Diem15phut'+i}}"ngModel placeholder=""></td>
-                            <td><input type="text" class="form-control"size="5" name="{{'Diem1Tiet'+i}}"ngModel placeholder=""></td>
-                            <td><input type="text" class="form-control"size="5" name="{{'DiemHK'+i}}"ngModel placeholder=""></td>
-                        </tr>
+                            <ng-container *ngFor="let item of formDiem.get('DSDiem').controls; let i = index;">
+                                <tr [formGroupName]="i">
+                                    <td>{{i+1}}</td>
+                                    <td><input type="text" class="form-control" size="6" formControlName="MaHS" readonly></td>
+                                    <td><input type="text" class="form-control"  formControlName="TenHS"readonly></td>
+                                    <td><input type="text" class="form-control" size="2" formControlName="GioiTinh" readonly></td>
+                                    <td><input type="text" class="form-control" size="5" formControlName="DiemMieng" placeholder=""></td>
+                                    <td><input type="text" class="form-control" size="5" formControlName="Diem15Phut" placeholder=""></td>
+                                    <td><input type="text" class="form-control" size="5" formControlName="Diem1Tiet" placeholder=""></td>
+                                    <td><input type="text" class="form-control" size="5" formControlName="DiemHocKy" placeholder=""></td>
+                                    <!-- <td><input type="text" class="form-control" size="5" name="{{'DiemMieng'+i}}"ngModel placeholder=""></td>
+                                    <td><input type="text" class="form-control"size="5" name="{{'Diem15phut'+i}}"ngModel placeholder=""></td>
+                                    <td><input type="text" class="form-control"size="5" name="{{'Diem1Tiet'+i}}"ngModel placeholder=""></td>
+                                    <td><input type="text" class="form-control"size="5" name="{{'DiemHK'+i}}"ngModel placeholder=""></td> -->
+                                    
+                                </tr>
+                            </ng-container>
+                        
                     </tbody>
                 </table>
+            </div>
             </div>
             
                 <div class="col-md-2">

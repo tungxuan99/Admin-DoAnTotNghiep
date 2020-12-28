@@ -6,11 +6,12 @@ import { Role } from '../../models/role';
 import { SharedModule } from '../../shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { Top10diemComponent } from './top10diem/top10diem.component';
+import { DiemtbComponent } from './diemtb/diemtb.component';
 
 
 
 @NgModule({
-  declarations: [Top10diemComponent],
+  declarations: [Top10diemComponent, DiemtbComponent],
   imports: [
     CommonModule,
     SharedModule,
@@ -19,6 +20,10 @@ import { Top10diemComponent } from './top10diem/top10diem.component';
       {
         path: 'top10diem',
         component: Top10diemComponent,
+      },
+      {
+        path: 'diemtb',
+        component: DiemtbComponent,
       },
     ])
   ]

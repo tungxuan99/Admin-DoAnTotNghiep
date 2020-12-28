@@ -1,0 +1,27 @@
+<div id="content" class="app-content">
+    <div class="container">
+       <div class="row justify-content-center">
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="#">Top điểm</a></li>
+             <li class="breadcrumb-item active">Theo học kỳ</li>
+          </ul>
+          <hr class="mb-4" />
+          <div class="nav-search">
+            <p class="pull-right no-margin">
+                <select class="form-control" (change)="changedMonHoc($event.target.value)">
+                    <option *ngFor="let mh of monhocs" value="{{mh.maMonHoc}}">{{mh.tenMonHoc}}</option>
+                </select>
+            </p>
+          </div>
+          <div class="nav-search ml-4">
+            <p class="pull-right no-margin">
+                <select class="form-control"  (change)="changedHocKy($event.target.value)">
+                    <option  [value]="12019">Kỳ 1 năm học 2019-2020</option>
+                    <option  [value]="22019" selected>Kỳ 2 năm học 2019-2020</option>
+                </select>
+            </p>
+          </div>
+<div id="chartContainer" style="width: 100%; height: 400px;"></div>
+</div>
+</div>
+</div>

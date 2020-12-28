@@ -52,7 +52,6 @@ export class MonhocComponent extends BaseComponent implements OnInit {
     this.pageSize = 5;
     this._api.post('/api/monhoc/search',{page: this.page, pageSize: this.pageSize, tenmon: this.formsearch.get('tenmon').value}).takeUntil(this.unsubscribe).subscribe(res => {
       this.monhocs = res.data;
-      console.log(this.monhocs);
       this.totalRecords =  res.totalItems;
       this.pageSize = res.pageSize;
       });
@@ -75,7 +74,6 @@ export class MonhocComponent extends BaseComponent implements OnInit {
            SoTiet:value.SoTiet,
            HeSoMonHoc:value.HeSoMonHoc,       
           };
-          console.log("okok");
         this._api.post('/api/monhoc/create-mon-hoc',tmp).takeUntil(this.unsubscribe).subscribe(res => {
           alert('Thêm thành công');
           this.search();
@@ -139,10 +137,9 @@ export class MonhocComponent extends BaseComponent implements OnInit {
       $('#createUserModal').modal('toggle');
       this._api.get('/api/monhoc/get-by-id/'+ row.maMonHoc).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.monhoc = res; 
-        console.log(this.monhoc);
           this.formdata = this.fb.group({
             'MaMonHoc': [this.monhoc.maMonHoc, Validators.required],
-            'TenMonHoc': [this.monhoc.tenMonHoc,, Validators.required],
+            'TenMonHoc': [this.monhoc.tenMonHoc, Validators.required],
             'SoTiet': [this.monhoc.soTiet, Validators.required],
             'HeSoMonHoc': [this.monhoc.heSoMonHoc, Validators.required],
           }); 

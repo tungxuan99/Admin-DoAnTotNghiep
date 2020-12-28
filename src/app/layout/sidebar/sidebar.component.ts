@@ -25,7 +25,6 @@ export class SidebarComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.authenticationService.userValue.level);
     if(this.authenticationService.userValue!=null){
     this.role=this.authenticationService.userValue.level.trim();
     }
