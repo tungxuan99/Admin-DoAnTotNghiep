@@ -52,7 +52,7 @@ export class DiemtbComponent extends BaseComponent implements OnInit {
           this.dataChart.push({
             y:val.diemTB,
             label:val.tenlophoc
-          });
+          }); 
         }
       });
       let chart = new CanvasJS.Chart("chartContainer", {
