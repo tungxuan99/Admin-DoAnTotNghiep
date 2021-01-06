@@ -23,7 +23,7 @@ import { XemdiemComponent } from './xemdiem/xemdiem.component';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { XemdiemhkComponent } from './xemdiemhk/xemdiemhk.component';
 import { ExportDiemComponent } from './export-diem/export-diem.component';
-
+import { InputTextModule } from 'primeng/inputtext';
 
 
 export const mainRoutes: Routes = [
@@ -132,10 +132,10 @@ export const mainRoutes: Routes = [
     XemdiemComponent,
     XemdiemhkComponent,
     ExportDiemComponent
-    
   ],
   imports: [
     SharedModule,
+    InputTextModule,
     CommonModule,
     RouterModule.forChild(mainRoutes)
   ],  

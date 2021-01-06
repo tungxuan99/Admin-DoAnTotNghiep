@@ -43,6 +43,11 @@ export class DiemdanhComponent extends BaseComponent implements OnInit {
       'MaLop': [''],
       'Buoi': [''],     
     });
+    let today= new Date();
+    if(today.getMonth()<2)
+    {
+      alert('1'+today.getFullYear());
+    }
     this.formds.get('Buoi').setValue('Sang');
     this.check=true;
     this.isCreate=false;
@@ -78,9 +83,7 @@ export class DiemdanhComponent extends BaseComponent implements OnInit {
             this._api.post('/api/ctdiemdanh/create-ctdiem-danh',cttmp).takeUntil(this.unsubscribe).subscribe(res => {});
           });
           alert("Điểm danh thành công!");
-          setTimeout(function () {
             window.location.reload();
-        }, 700);
         });
       });
     

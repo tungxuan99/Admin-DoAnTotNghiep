@@ -133,8 +133,16 @@ LayDS(){
     
   onSubmit(form: any): void{
     console.log(form.DSDiem);
+    let today= new Date();
+    let MaHocKy="";
+    if(today.getMonth()<2||today.getMonth()>=8)
+    {
+      MaHocKy='1'+today.getFullYear();
+    }else{
+      MaHocKy='2'+today.getFullYear();
+    }
     (form.DSDiem).forEach(element => {
-      let maHK="22020";
+      let maHK=MaHocKy;
       let maMonHoc= form.MaMonHoc;
       let maLopHoc= form.MaLopHoc;
       let maHS= element.MaHS;

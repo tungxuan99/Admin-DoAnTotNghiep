@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {InputTextModule} from 'primeng/inputtext';
+import {ButtonModule} from 'primeng/button';
 import {TableModule} from 'primeng/table';
 import {PanelModule} from 'primeng/panel';
 import {CalendarModule} from 'primeng/calendar';
@@ -21,7 +22,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     DropdownModule,
     FileUploadModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    ButtonModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -33,7 +35,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CalendarModule,
     DropdownModule,
     FileUploadModule,
-    NgbModule 
+    NgbModule ,
+    ButtonModule
   ],
 })
 export class SharedModule { }
