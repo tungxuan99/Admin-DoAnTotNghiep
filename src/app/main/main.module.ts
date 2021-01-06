@@ -22,6 +22,7 @@ import { DiemComponent } from './diem/diem.component';
 import { XemdiemComponent } from './xemdiem/xemdiem.component';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { XemdiemhkComponent } from './xemdiemhk/xemdiemhk.component';
+import { ExportDiemComponent } from './export-diem/export-diem.component';
 
 
 
@@ -93,6 +94,11 @@ export const mainRoutes: Routes = [
           data: { roles: [Role.Student] },
         },
         {
+          path: 'exportDiem',
+          component: ExportDiemComponent,
+          canActivate: [RoleGuard],
+        },
+        {
           path: 'user',
           loadChildren: () =>
             import('./user/user.module').then((m) => m.UserModule),
@@ -124,7 +130,8 @@ export const mainRoutes: Routes = [
     TintucComponent,
     DiemComponent,
     XemdiemComponent,
-    XemdiemhkComponent
+    XemdiemhkComponent,
+    ExportDiemComponent
     
   ],
   imports: [

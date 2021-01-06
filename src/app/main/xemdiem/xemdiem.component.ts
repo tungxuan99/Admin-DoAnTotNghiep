@@ -19,6 +19,7 @@ declare var $: any;
 export class XemdiemComponent extends BaseComponent implements OnInit {
   public tintuc: any;
   public diems: any;
+  public DiemTBHocKy: any;
   submitted = false;
   @ViewChild(FileUpload, { static: false }) file_image: FileUpload;
   constructor(private fb: FormBuilder, injector: Injector,
@@ -30,12 +31,28 @@ export class XemdiemComponent extends BaseComponent implements OnInit {
     this._api.get('/api/diem/get-by-hs-hk/'+this.authenticationService.userValue.username+"/"+'22019').takeUntil(this.unsubscribe).subscribe(res => {
       this.diems = res;
       console.log(this.diems);
+      this.DiemTBHocKy= this.TinhDiemTB(this.diems);
       });
   }
   changed(e){
     this._api.get('/api/diem/get-by-hs-hk/'+this.authenticationService.userValue.username+"/"+e).takeUntil(this.unsubscribe).subscribe(res => {
       this.diems = res;
+      this.DiemTBHocKy= this.TinhDiemTB(this.diems);
       });
-}
+  }
+  TinhDiemTB(Diem:any[]){
+    let diemTB=0.0;
+    Diem.forEach(val=>{
+      if(val.maMonHoc=='T' || val.maMonHoc=='V')
+      {
+        diemTB+= parseFloat(val.diemTB)+parseFloat(val.diemTB);
+      }else{
+      diemTB+=val.diemTB;
+      }
+    });
+    diemTB=diemTB/(Diem.length+2);
+    diemTB = Math.round(diemTB * 100)/100;
+    return diemTB;
+  }
 
 }

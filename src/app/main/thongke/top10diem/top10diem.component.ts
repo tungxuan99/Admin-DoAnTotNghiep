@@ -17,8 +17,6 @@ declare var $: any;
 })
 export class Top10diemComponent extends BaseComponent implements OnInit {
   public hocsinhs: any;
-  submitted = false;
-  @ViewChild(FileUpload, { static: false }) file_image: FileUpload;
   constructor(private fb: FormBuilder, injector: Injector,
     private datePipe: DatePipe,private authenticationService: AuthenticationService) {
     super(injector);

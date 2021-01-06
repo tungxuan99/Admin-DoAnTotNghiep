@@ -1,0 +1,47 @@
+<div id="content" class="app-content">
+    <div class="container">
+       <div class="row justify-content-center">
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="#">Xem điểm</a></li>
+             <li class="breadcrumb-item active">Bảng điểm</li>
+          </ul>
+          <div class="container">
+             <h1>This is an Angular App!</h1>
+             <input type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()">  
+             <br/><br/>  
+             <div class="container text-center" id="couponPage" style="width: 595px; height: auto;" #couponPage>
+                <!-- <table class="table table-bordered">  
+                   <tr class="table-primary">  
+                       <th>Mã sinh viên</th>  
+                       <th>Name</th>  
+                       <th>Điểm kết thúc</th>  
+                   </tr>  
+                   <tr *ngFor="let item of Data">  
+                       <th>{{item.Id}}</th>  
+                       <th>{{item.Name}}</th>  
+                       <th>{{item.Salary}}</th>  
+                   </tr>  
+                   </table>   -->
+                <table class="table table-bordered">
+                    <thead>
+                    <tr class="table-primary">
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th>DESIGNATION</th>
+                        <th>DEPARTMENT</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let data of data">
+                        <td style="width: 5px;">{{data[0]}}</td>
+                        <td style="width: 5px;">{{data[1]}}</td>
+                        <td style="width: 5px;">{{data[2]}}</td>
+                        <td style="width: 5px;">{{data[3]}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>

@@ -67,9 +67,23 @@ export class DiemdanhComponent extends BaseComponent implements OnInit {
       this._api.post('/api/diemdanh/create-diem-danh',tmp).takeUntil(this.unsubscribe).subscribe(res => {
         this._api.get('/api/diemdanh/get-all').takeUntil(this.unsubscribe).subscribe(res => {
           this.diemdanh=res;
+          form.DSHS.forEach(val => {
+            
+            let cttmp={
+              MaDD:this.diemdanh[0].maDD,
+              MaHS:val.MaHS,
+              TrangThai:val.TrangThai
+            };
+            console.log(cttmp);
+            this._api.post('/api/ctdiemdanh/create-ctdiem-danh',cttmp).takeUntil(this.unsubscribe).subscribe(res => {});
+          });
+          alert("Điểm danh thành công!");
+          setTimeout(function () {
+            window.location.reload();
+        }, 700);
         });
       });
-      
+    
     
   } 
 
@@ -96,7 +110,7 @@ export class DiemdanhComponent extends BaseComponent implements OnInit {
       MaHS: [maHS],
       TenHS: [tenHS],
       GioiTinh: [gioiTinh],
-      TrangThai: [''],
+      TrangThai: ['0'],
     });
   }
   get DSHSList() {
