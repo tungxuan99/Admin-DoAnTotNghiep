@@ -20,7 +20,7 @@
                     <div *ngIf="f.password.errors.required">Chưa nhập mật khẩu!</div>
                 </div>
              </div>
-             <div class="form-group" *ngIf="submitted && error != null">
+             <div class="form-group" *ngIf="submitted && error.lenght>0">
                 <div class="d-flex invalid-feedback">
                    Tên tài khoản hoặc mật khẩu không chính xác!
                 </div>

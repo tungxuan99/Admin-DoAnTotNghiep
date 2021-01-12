@@ -8,6 +8,9 @@ import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/takeUntil';
 import { DatePipe } from '@angular/common';
 import { AuthenticationService } from '../../lib/authentication.service';
+import jsPDF from 'jspdf';
+// import 'jspdf-autotable';
+import html2canvas from 'html2canvas';
 declare var $: any;
 
 
@@ -20,6 +23,7 @@ export class XemdiemComponent extends BaseComponent implements OnInit {
   public tintuc: any;
   public diems: any;
   public DiemTBHocKy: any;
+  public user:any;
   submitted = false;
   @ViewChild(FileUpload, { static: false }) file_image: FileUpload;
   constructor(private fb: FormBuilder, injector: Injector,
@@ -33,6 +37,7 @@ export class XemdiemComponent extends BaseComponent implements OnInit {
       console.log(this.diems);
       this.DiemTBHocKy= this.TinhDiemTB(this.diems);
       });
+    this.user=this.authenticationService.userValue;
   }
   changed(e){
     this._api.get('/api/diem/get-by-hs-hk/'+this.authenticationService.userValue.username+"/"+e).takeUntil(this.unsubscribe).subscribe(res => {
@@ -53,6 +58,18 @@ export class XemdiemComponent extends BaseComponent implements OnInit {
     diemTB=diemTB/(Diem.length+2);
     diemTB = Math.round(diemTB * 100)/100;
     return diemTB;
+  }
+  SavePDF(): void {
+    let data = document.getElementById('couponPage');
+    html2canvas(data).then(canvas => {
+      let imgWidth = 190;
+      let imgHeight = canvas.height * imgWidth / canvas.width;
+      const contentDataURL = canvas.toDataURL('image/png')
+      let pdf = new jsPDF('p', 'mm', 'a4');
+      var position = 1;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+      pdf.save('Diem.pdf');
+    });
   }
 
 }

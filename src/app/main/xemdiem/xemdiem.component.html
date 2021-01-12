@@ -6,7 +6,7 @@
              <li class="breadcrumb-item active">Bảng điểm</li>
           </ul>
           <hr class="mb-4" />
-          <div class="nav-search">
+          <div class="nav-search mt-4 mr-4">
             <p class="pull-right no-margin">
                 <select  (change)="changed($event.target.value)">
                     <option  [value]="12019">Kỳ 1 năm học 2019-2020</option>
@@ -14,36 +14,48 @@
                 </select>
             </p>
           </div>
-          <table class="table table-striped table-bordered">
-              <thead style="text-align: center;">
-                <tr>
-                    <th scope="col">STT</th>
-                    <th scope="col">Môn học</th>
-                    <th scope="col">Điểm miệng</th>
-                    <th scope="col">Điểm 15'</th>
-                    <th scope="col">Điểm 1 tiết</th>
-                    <th scope="col">Điểm học kỳ</th>
-                    <th scope="col">Điểm trung bình</th>
-                </tr>
-              </thead>
-              <tbody >
-                <ng-container *ngFor="let item of diems, let i =index">
-                <tr>
-                  <td style="text-align: center;">{{i+1}}</td>
-                  <td>{{ item.tenMonHoc}}</td>
-                  <td style="text-align: center;">{{ item.diemMieng }}</td>
-                  <td style="text-align: center;">{{ item.diem15Phut }}</td>
-                  <td style="text-align: center;">{{ item.diem1Tiet }}</td>
-                  <td style="text-align: center;">{{ item.diemHK }}</td>
-                  <td style="text-align: center;">{{ item.diemTB }}</td>
-                </tr>
-                </ng-container>
-                <tr>
-                  <td colspan="6" class="text-right"><b>Điểm trung bình</b></td>
-                  <td class="text-center"><b>{{DiemTBHocKy}}</b></td>
-                </tr>
-              </tbody>
-          </table>
        </div>
+       <div class="rows form-group">
+        <input type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()">
+      </div>
+      <div id="couponPage">
+        <div class="rows form-group text-center">
+          <h2><b>BẢNG ĐIỂM HỌC SINH</b></h2>
+        </div>
+        <div class="text-left">
+          <h5>Mã sinh viên: {{user.username}}</h5>
+          <h5>Họ và tên: {{user.hoTen}}</h5>
+        </div>
+        <table class="table table-bordered">
+            <thead style="text-align: center;">
+              <tr>
+                  <th scope="col">STT</th>
+                  <th scope="col">Môn học</th>
+                  <th scope="col">Điểm miệng</th>
+                  <th scope="col">Điểm 15'</th>
+                  <th scope="col">Điểm 1 tiết</th>
+                  <th scope="col">Điểm học kỳ</th>
+                  <th scope="col">Điểm trung bình</th>
+              </tr>
+            </thead>
+            <tbody >
+              <ng-container *ngFor="let item of diems, let i =index">
+              <tr>
+                <td style="text-align: center;">{{i+1}}</td>
+                <td>{{ item.tenMonHoc}}</td>
+                <td style="text-align: center;">{{ item.diemMieng }}</td>
+                <td style="text-align: center;">{{ item.diem15Phut }}</td>
+                <td style="text-align: center;">{{ item.diem1Tiet }}</td>
+                <td style="text-align: center;">{{ item.diemHK }}</td>
+                <td style="text-align: center;">{{ item.diemTB }}</td>
+              </tr>
+              </ng-container>
+              <tr>
+                <td colspan="6" class="text-right"><b>Điểm trung bình</b></td>
+                <td class="text-center"><b>{{DiemTBHocKy}}</b></td>
+              </tr>
+            </tbody>
+        </table>
+      </div>
     </div>
 </div>

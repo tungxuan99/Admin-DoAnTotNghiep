@@ -43,11 +43,6 @@ export class DiemdanhComponent extends BaseComponent implements OnInit {
       'MaLop': [''],
       'Buoi': [''],     
     });
-    let today= new Date();
-    if(today.getMonth()<2)
-    {
-      alert('1'+today.getFullYear());
-    }
     this.formds.get('Buoi').setValue('Sang');
     this.check=true;
     this.isCreate=false;

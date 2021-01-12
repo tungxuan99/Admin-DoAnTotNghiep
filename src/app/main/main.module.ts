@@ -24,6 +24,7 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { XemdiemhkComponent } from './xemdiemhk/xemdiemhk.component';
 import { ExportDiemComponent } from './export-diem/export-diem.component';
 import { InputTextModule } from 'primeng/inputtext';
+import { XemdiemlopComponent } from './xemdiemlop/xemdiemlop.component';
 
 
 export const mainRoutes: Routes = [
@@ -88,6 +89,12 @@ export const mainRoutes: Routes = [
           data: { roles: [Role.Student] },
         },
         {
+          path: 'xemdiemtheolop',
+          component: XemdiemlopComponent,
+          canActivate: [RoleGuard],
+          data: { roles: [Role.Admin, Role.User] },
+        },
+        {
           path: 'xemdiemhk',
           component: XemdiemhkComponent,
           canActivate: [RoleGuard],
@@ -131,7 +138,8 @@ export const mainRoutes: Routes = [
     DiemComponent,
     XemdiemComponent,
     XemdiemhkComponent,
-    ExportDiemComponent
+    ExportDiemComponent,
+    XemdiemlopComponent
   ],
   imports: [
     SharedModule,

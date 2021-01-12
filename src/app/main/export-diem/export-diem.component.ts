@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // import jsPDF from 'jspdf'; 
 import { ViewChild, ElementRef } from '@angular/core';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+// import 'jspdf-autotable';
 import html2canvas from 'html2canvas';
 // import pdfMake from 'pdfmake/build/pdfmake';
 // import pdfFonts from 'pdfmake/build/vfs_fonts';
