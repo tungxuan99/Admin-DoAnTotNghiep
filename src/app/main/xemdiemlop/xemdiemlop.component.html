@@ -1,1 +1,87 @@
-
+<div id="content" class="app-content">
+    <div class="container">
+       <div class="row justify-content-center">
+          <ul class="breadcrumb">
+             <li class="breadcrumb-item"><a href="#">Quản lý</a></li>
+             <li class="breadcrumb-item active">Xem điểm trung bình theo lớp</li>
+          </ul>
+          <hr class="mb-4" />
+       </div>
+       <form *ngIf="check" role="form" [formGroup]="form"  (ngSubmit)="LayDS()">
+       <div class="row">
+          <div class="col-md-4">
+             <label class="col-md-4 col-form-label">Chọn lớp</label>
+             <div class="col-md-4">
+                <select formControlName="MaLop" class="form-control">
+                   <option *ngFor="let lh of lophocs" value="{{lh.maLopHoc}}">{{lh.tenlophoc}}</option>
+                </select>
+             </div>
+          </div>
+          <div class="col-md-4">
+             <label class="col-md-4 col-form-label">Kỳ học</label>
+             <div class="col-md-9">
+                <select formControlName="MaHocKy" class="form-control">
+                   <option value="12018">Kỳ 1 năm học 2018 - 2019</option>
+                   <option value="22018">Kỳ 2 năm học 2018 - 2019</option>
+                   <option value="12019">Kỳ 1 năm học 2019 - 2020</option>
+                   <option value="22019">Kỳ 2 năm học 2019 - 2020</option>
+                </select>
+             </div>
+          </div>
+          <div class="col-md-2">
+             <button (click)="LayDS()" class="btn btn-info">Gửi</button>
+          </div>
+       </div>
+       </form>
+       <div *ngIf="isCreate" class="table-responsive">
+          <div class="rows form-group">
+             <input type="button" value="Download PDF" class="btn btn-success" (click)="SavePDF()">
+          </div>
+          <div id="couponPage">
+             <div class="rows form-group text-center">
+                <h2><b>BẢNG ĐIỂM LỚP {{MaLop}}</b></h2>
+             </div>
+             <table class="table table-bordered table-striped">
+                <thead class="text-center">
+                   <tr>
+                      <th>TT</th>
+                      <th>Tên học sinh</th>
+                      <th>Ngày sinh</th>
+                      <th>Giới tính</th>
+                      <th>Toán</th>
+                      <th>Văn</th>
+                      <th>Tin học</th>
+                      <th>Tiếng anh</th>
+                      <th>Sinh học</th>
+                      <th>Lịch sử</th>
+                      <th>Hoá học</th>
+                      <th>GDCD</th>
+                      <th>Công nghệ</th>
+                      <th>Điểm TB</th>
+                   </tr>
+                </thead>
+                <tbody>
+                   <ng-container *ngFor="let hs of diems; let i = index;">
+                      <tr class="text-center">
+                         <td>{{i+1}}</td>
+                         <td style="text-align: left;">{{hs.TenHS}}</td>
+                         <td>{{hs.NgaySinh | date: 'dd/MM/yyyy'}}</td>
+                         <td>{{hs.GioiTinh }}</td>
+                         <td>{{hs.Toan}}</td>
+                         <td>{{hs.Van}}</td>
+                         <td>{{hs.TinHoc}}</td>
+                         <td>{{hs.TiengAnh}}</td>
+                         <td>{{hs.SinhHoc}}</td>
+                         <td>{{hs.LichSu}}</td>
+                         <td>{{hs.HoaHoc}}</td>
+                         <td>{{hs.GiaoDuc}}</td>
+                         <td>{{hs.CongNghe}}</td>
+                         <td>{{hs.DiemTB}}</td>
+                      </tr>
+                   </ng-container>
+                </tbody>
+             </table>
+          </div>
+       </div>
+    </div>
+ </div>

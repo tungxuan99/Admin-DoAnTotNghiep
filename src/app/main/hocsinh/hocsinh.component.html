@@ -107,13 +107,13 @@
               <div class="col-md-6 mb-3">
                  <label >Giới Tính</label>
                  <select formControlName="GioiTinh" class="form-control">
-                    <option value="Nam" selected>Nam</option>
+                    <option value="Nam">Nam</option>
                     <option value="Nữ">Nữ</option>
                  </select>
               </div>
               <div class="col-md-6 mb-3">
                  <label >Ngày sinh</label>
-                 <input type="text" class="form-control"  formControlName="NgaySinh" required="">
+                 <input type="date" class="form-control"  formControlName="NgaySinh" required="">
                  <div *ngIf="submitted && f.NgaySinh.errors" class="d-flex valid-feedback">
                     <div *ngIf="f.NgaySinh.errors.required">Ngày sinh là bắt buộc</div>
                  </div>

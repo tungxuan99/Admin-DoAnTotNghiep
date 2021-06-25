@@ -159,6 +159,7 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
         'Password': ['', Validators.required],
       });
       this.formdata.get('MaLopHoc').setValue(this.lophocs[0].maLopHoc);
+      this.formdata.get('GioiTinh').setValue("Nam");
       this.doneSetupForm = true;
     });
   }
@@ -172,7 +173,9 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
       this._api.get('/api/hocsinh/get-by-id/'+ row.maHS).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.hocsinh = res; 
         console.log(this.hocsinh);
-        let ngay =this.datePipe.transform(this.hocsinh.ngaySinh,"dd-MM-yyyy");
+        let ngay =this.datePipe.transform(this.hocsinh.ngaySinh,"yyyy-MM-dd");
+        console.log(ngay);
+        
           this.formdata = this.fb.group({
             'MaHS': [this.hocsinh.maHS, Validators.required],
             'MaLopHoc': [this.hocsinh.maLopHoc, Validators.required],

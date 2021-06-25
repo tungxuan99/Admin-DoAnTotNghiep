@@ -37,7 +37,6 @@ export class XemdiemhkComponent extends BaseComponent implements OnInit {
       });
       this._api.get('/api/diem/xem-diem-hk/'+this.authenticationService.userValue.username+'/'+'22019').takeUntil(this.unsubscribe).subscribe(res => {
         this.diems = res;
-        console.log(this.diems);
         });
 
         this._api.get('/api/hocsinh/get-by-ten-mahs/'+this.authenticationService.userValue.username).takeUntil(this.unsubscribe).subscribe(res => {
@@ -47,7 +46,6 @@ export class XemdiemhkComponent extends BaseComponent implements OnInit {
   search() {
     this._api.get('/api/diem/xem-diem-hk/'+this.formsearch.get('Search').value+'/'+'22019').takeUntil(this.unsubscribe).subscribe(res => {
       this.diems = res;
-      console.log(this.diems);
       });
       this._api.get('/api/hocsinh/get-by-ten-mahs/'+this.formsearch.get('Search').value).takeUntil(this.unsubscribe).subscribe(res => {
         this.hocsinh = res;

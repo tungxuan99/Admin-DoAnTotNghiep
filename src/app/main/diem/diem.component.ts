@@ -52,7 +52,7 @@ export class DiemComponent extends BaseComponent implements OnInit {
 }
 get f() { return this.formdata.controls; }
 
-LayDS(){
+  LayDS(){
     this.check= false;
     this.isCreate=true;
     this.maLopHoc=this.formds.get('MaLop').value;

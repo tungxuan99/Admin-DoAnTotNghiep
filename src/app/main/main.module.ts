@@ -32,8 +32,8 @@ export const mainRoutes: Routes = [
       path: '', component: MainComponent,
       children: [
         {
-            path: '', component: DashbroadComponent,
-            canActivate: [RoleGuard],
+          path: '', component: DashbroadComponent,
+          canActivate: [RoleGuard],
           data: { roles: [Role.Admin, Role.User] },
         },
         {
