@@ -6,6 +6,7 @@ import {FormControl, FormGroup} from '@angular/forms'
 import { BaseComponent } from '../../lib/base.component';
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/takeUntil';
+import Swal from 'sweetalert2/dist/sweetalert2.js'; 
 declare var $: any;
 
 @Component({
@@ -66,7 +67,6 @@ export class MonhocComponent extends BaseComponent implements OnInit {
     if (this.formdata.invalid) {
       return;
     } 
-    console.log(this.isCreate);
     if(this.isCreate) { 
         let tmp = {
            MaMonHoc:value.MaMonHoc,
@@ -75,7 +75,11 @@ export class MonhocComponent extends BaseComponent implements OnInit {
            HeSoMonHoc:value.HeSoMonHoc,       
           };
         this._api.post('/api/monhoc/create-mon-hoc',tmp).takeUntil(this.unsubscribe).subscribe(res => {
-          alert('Thêm thành công');
+          Swal.fire(
+            'Đã thêm!',
+            'Thêm thành công',
+            'success'
+          );
           this.search();
           this.closeModal();
           });
@@ -87,7 +91,11 @@ export class MonhocComponent extends BaseComponent implements OnInit {
            HeSoMonHoc:value.HeSoMonHoc,          
           };
         this._api.post('/api/monhoc/update-mon-hoc',tmp).takeUntil(this.unsubscribe).subscribe(res => {
-          alert('Cập nhật thành công');
+          Swal.fire(
+            'Đã cập nhật!',
+            'Cập nhật thành công',
+            'success'
+          );
           this.search();
           this.closeModal();
           });
@@ -96,10 +104,25 @@ export class MonhocComponent extends BaseComponent implements OnInit {
   } 
 
   onDelete(row) { 
-    this._api.post('/api/monhoc/delete-mon-hoc',{id:row.maMonHoc}).takeUntil(this.unsubscribe).subscribe(res => {
-      alert('Xóa thành công');
-      this.search(); 
-      });
+    Swal.fire({
+      title: 'Bạn có chắc muốn xoá?',
+      text: 'Bạn sẽ không thể khôi phục bản ghi này!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Có',
+      cancelButtonText: 'Không'
+    }).then((result) => {
+      if (result.value) {
+        this._api.post('/api/monhoc/delete-mon-hoc',{id:row.maMonHoc}).takeUntil(this.unsubscribe).subscribe(res => {
+          this.search();
+        });
+        Swal.fire(
+          'Đã xoá!',
+          'Bản ghi không thể khôi phục',
+          'success'
+        );
+      }
+    });
   }
 
   Reset() {  

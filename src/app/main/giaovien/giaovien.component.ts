@@ -6,6 +6,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import { BaseComponent } from '../../lib/base.component';
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/takeUntil';
+import Swal from 'sweetalert2/dist/sweetalert2.js'; 
 declare var $: any;
 
 @Component({
@@ -71,7 +72,6 @@ export class GiaovienComponent extends BaseComponent implements OnInit {
     if (this.formdata.invalid) {
       return;
     } 
-    console.log(this.isCreate);
     if(this.isCreate) { 
         let tmp = {
            MaMonHoc:value.MaMonHoc,
@@ -81,7 +81,11 @@ export class GiaovienComponent extends BaseComponent implements OnInit {
            passwordgv: value.PassWord       
           };
         this._api.post('/api/giaovien/create-giao-vien',tmp).takeUntil(this.unsubscribe).subscribe(res => {
-          alert('Thêm thành công');
+          Swal.fire(
+            'Đã thêm!',
+            'Thêm thành công',
+            'success'
+          );
           this.search();
           this.closeModal();
           });
@@ -95,7 +99,11 @@ export class GiaovienComponent extends BaseComponent implements OnInit {
            Magv:this.giaovien.magv         
           };
         this._api.post('/api/giaovien/update-giao-vien',tmp).takeUntil(this.unsubscribe).subscribe(res => {
-          alert('Cập nhật thành công');
+          Swal.fire(
+            'Đã cập nhật!',
+            'Cập nhật thành công',
+            'success'
+          );
           this.search();
           this.closeModal();
           });
@@ -104,10 +112,25 @@ export class GiaovienComponent extends BaseComponent implements OnInit {
   } 
 
   onDelete(row) { 
-    this._api.post('/api/giaovien/delete-giao-vien',{id:row.magv}).takeUntil(this.unsubscribe).subscribe(res => {
-      alert('Xóa thành công');
-      this.search(); 
-      });
+    Swal.fire({
+      title: 'Bạn có chắc muốn xoá?',
+      text: 'Bạn sẽ không thể khôi phục bản ghi này!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Có',
+      cancelButtonText: 'Không'
+    }).then((result) => {
+      if (result.value) {
+        this._api.post('/api/giaovien/delete-giao-vien',{id:row.magv}).takeUntil(this.unsubscribe).subscribe(res => {
+          this.search();
+        });
+        Swal.fire(
+          'Đã xoá!',
+          'Bản ghi không thể khôi phục',
+          'success'
+        );
+      }
+    });
   }
 
   Reset() {  

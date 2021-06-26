@@ -7,6 +7,7 @@ import { BaseComponent } from '../../lib/base.component';
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/takeUntil';
 declare var $: any;
+import Swal from 'sweetalert2/dist/sweetalert2.js'; 
 
 @Component({
   selector: 'app-diem',
@@ -152,6 +153,10 @@ get f() { return this.formdata.controls; }
       let diemHK= element.DiemHocKy;
       this.CreateDiem(maHS,maHK,maMonHoc,maLopHoc,diemMieng,diem15Phut,diem1Tiet,diemHK);
     });
-    alert("Thêm điểm thành công!");
+    Swal.fire(
+      'Đã thêm!',
+      'Thêm thành công',
+      'success'
+    );
   }
 }

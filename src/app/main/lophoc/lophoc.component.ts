@@ -6,6 +6,7 @@ import {FormControl, FormGroup} from '@angular/forms'
 import { BaseComponent } from '../../lib/base.component';
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/takeUntil';
+import Swal from 'sweetalert2/dist/sweetalert2.js'; 
 declare var $: any;
 
 @Component({
@@ -52,7 +53,6 @@ export class LophocComponent extends BaseComponent implements OnInit {
     this.pageSize = 5;
     this._api.post('/api/lophoc/search',{page: this.page, pageSize: this.pageSize, tenlop: this.formsearch.get('tenlop').value}).takeUntil(this.unsubscribe).subscribe(res => {
       this.lophocs = res.data;
-      console.log(this.lophocs);
       this.totalRecords =  res.totalItems;
       this.pageSize = res.pageSize;
       });
@@ -67,7 +67,6 @@ export class LophocComponent extends BaseComponent implements OnInit {
     if (this.formdata.invalid) {
       return;
     } 
-    console.log(this.isCreate);
     if(this.isCreate) { 
         let tmp = {
           malophoc: value.tenlop ,
@@ -75,7 +74,11 @@ export class LophocComponent extends BaseComponent implements OnInit {
           khoiHoc:value.khoihoc,       
           };
         this._api.post('/api/lophoc/create-lop-hoc',tmp).takeUntil(this.unsubscribe).subscribe(res => {
-          alert('Thêm thành công');
+          Swal.fire(
+            'Đã thêm!',
+            'Thêm thành công',
+            'success'
+          );
           this.search();
           this.closeModal();
           });
@@ -86,7 +89,11 @@ export class LophocComponent extends BaseComponent implements OnInit {
           maLopHoc:this.lophocs.maLopHoc,          
           };
         this._api.post('/api/lophoc/update-lop-hoc',tmp).takeUntil(this.unsubscribe).subscribe(res => {
-          alert('Cập nhật thành công');
+          Swal.fire(
+            'Đã cập nhật!',
+            'Cập nhật thành công',
+            'success'
+          );
           this.search();
           this.closeModal();
           });
@@ -95,11 +102,25 @@ export class LophocComponent extends BaseComponent implements OnInit {
   } 
 
   onDelete(row) { 
-    console.log(row.maLopHoc);
-    this._api.post('/api/lophoc/delete-lop-hoc',{id:row.maLopHoc}).takeUntil(this.unsubscribe).subscribe(res => {
-      alert('Xóa thành công');
-      this.search(); 
-      });
+    Swal.fire({
+      title: 'Bạn có chắc muốn xoá?',
+      text: 'Bạn sẽ không thể khôi phục bản ghi này!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Có',
+      cancelButtonText: 'Không'
+    }).then((result) => {
+      if (result.value) {
+        this._api.post('/api/lophoc/delete-lop-hoc',{id:row.maLopHoc}).takeUntil(this.unsubscribe).subscribe(res => {
+          this.search();
+        });
+        Swal.fire(
+          'Đã xoá!',
+          'Bản ghi không thể khôi phục',
+          'success'
+        );
+      }
+    });
   }
 
   Reset() {  
@@ -133,7 +154,6 @@ export class LophocComponent extends BaseComponent implements OnInit {
       $('#createUserModal').modal('toggle');
       this._api.get('/api/lophoc/get-by-id/'+ row.maLopHoc).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.lophoc = res; 
-        console.log(this.lophoc);
           this.formdata = this.fb.group({
             'tenlop': [this.lophoc.tenlophoc, Validators.required],
             'khoihoc': [this.lophoc.khoiHoc, Validators.required],

@@ -6,6 +6,7 @@ import {FormControl, FormGroup} from '@angular/forms'
 import { BaseComponent } from '../../../lib/base.component';
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/takeUntil';
+import Swal from 'sweetalert2/dist/sweetalert2.js'; 
 declare var $: any;
 @Component({
   selector: 'app-user',
@@ -52,7 +53,6 @@ export class UserComponent extends BaseComponent implements OnInit {
     this.pageSize = 5;
     this._api.post('/api/users/search',{page: this.page, pageSize: this.pageSize, hoten: this.formsearch.get('hoten').value, taikhoan: this.formsearch.get('taikhoan').value}).takeUntil(this.unsubscribe).subscribe(res => {
       this.users = res.data;
-      console.log(this.users);
       this.totalRecords =  res.totalItems;
       this.pageSize = res.pageSize;
       });
@@ -73,8 +73,6 @@ export class UserComponent extends BaseComponent implements OnInit {
     if (this.formdata.invalid) {
       return;
     } 
-    console.log("click ok!");
-    console.log(this.isCreate);
     if(this.isCreate) { 
         let tmp = {
            HoTen:value.hoten,
@@ -82,9 +80,12 @@ export class UserComponent extends BaseComponent implements OnInit {
            password:value.matkhau,
            level:value.role,       
           };
-          console.log("okok");
         this._api.post('/api/users/create-user',tmp).takeUntil(this.unsubscribe).subscribe(res => {
-          alert('Thêm thành công');
+          Swal.fire(
+            'Đã thêm!',
+            'Thêm thành công',
+            'success'
+          );
           this.search();
           this.closeModal();
           });
@@ -97,7 +98,11 @@ export class UserComponent extends BaseComponent implements OnInit {
            id:this.user.id,          
           };
         this._api.post('/api/users/update-user',tmp).takeUntil(this.unsubscribe).subscribe(res => {
-          alert('Cập nhật thành công');
+          Swal.fire(
+            'Đã cập nhật!',
+            'Cập nhật thành công',
+            'success'
+          );
           this.search();
           this.closeModal();
           });
@@ -106,10 +111,25 @@ export class UserComponent extends BaseComponent implements OnInit {
   } 
 
   onDelete(row) { 
-    this._api.post('/api/users/delete-user',{id:row.id}).takeUntil(this.unsubscribe).subscribe(res => {
-      alert('Xóa thành công');
-      this.search(); 
-      });
+    Swal.fire({
+      title: 'Bạn có chắc muốn xoá?',
+      text: 'Bạn sẽ không thể khôi phục bản ghi này!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Có',
+      cancelButtonText: 'Không'
+    }).then((result) => {
+      if (result.value) {
+        this._api.post('/api/users/delete-user',{id:row.id}).takeUntil(this.unsubscribe).subscribe(res => {
+          this.search();
+        });
+        Swal.fire(
+          'Đã xoá!',
+          'Bản ghi không thể khôi phục',
+          'success'
+        );
+      }
+    });
   }
 
   Reset() {  

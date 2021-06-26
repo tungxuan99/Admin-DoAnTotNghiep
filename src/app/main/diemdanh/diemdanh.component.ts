@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/takeUntil';
 import { DatePipe } from '@angular/common';
 import { AuthenticationService } from '../../lib/authentication.service';
+import Swal from 'sweetalert2/dist/sweetalert2.js'; 
 declare var $: any;
 
 @Component({
@@ -77,7 +78,11 @@ export class DiemdanhComponent extends BaseComponent implements OnInit {
             console.log(cttmp);
             this._api.post('/api/ctdiemdanh/create-ctdiem-danh',cttmp).takeUntil(this.unsubscribe).subscribe(res => {});
           });
-          alert("Điểm danh thành công!");
+          Swal.fire(
+            'Đã điểm danh!',
+            'Điểm danh thành công',
+            'success'
+          );
             window.location.reload();
         });
       });

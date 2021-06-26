@@ -87,14 +87,14 @@
               <div class="col-md-6 mb-3">
                  <label>Mã học sinh</label>
                  <input type="text" class="form-control"  formControlName="MaHS" >
-                 <div *ngIf="submitted && f.MaHS.errors" class="d-flex valid-feedback">
+                 <div *ngIf="submitted && f.MaHS.errors" class="d-flex invalid-feedback">
                     <div *ngIf="f.MaHS.errors.required">Mã học sinh là bắt buộc</div>
                  </div>
               </div>
               <div class="col-md-6 mb-3">
                  <label>Họ Tên</label>
                  <input type="text" class="form-control"  formControlName="TenHS" required="">
-                 <div *ngIf="submitted && f.TenHS.errors" class="d-flex valid-feedback">
+                 <div *ngIf="submitted && f.TenHS.errors" class="d-flex invalid-feedback">
                     <div *ngIf="f.TenHS.errors.required">Họ tên là bắt buộc</div>
                  </div>
               </div>
@@ -114,21 +114,21 @@
               <div class="col-md-6 mb-3">
                  <label >Ngày sinh</label>
                  <input type="date" class="form-control"  formControlName="NgaySinh" required="">
-                 <div *ngIf="submitted && f.NgaySinh.errors" class="d-flex valid-feedback">
+                 <div *ngIf="submitted && f.NgaySinh.errors" class="d-flex invalid-feedback">
                     <div *ngIf="f.NgaySinh.errors.required">Ngày sinh là bắt buộc</div>
                  </div>
               </div>
               <div class="col-md-6 mb-3">
                  <label >Nơi sinh</label>
                  <input type="text" class="form-control"  formControlName="NoiSinh" required="">
-                 <div *ngIf="submitted && f.NoiSinh.errors" class="d-flex valid-feedback">
+                 <div *ngIf="submitted && f.NoiSinh.errors" class="d-flex invalid-feedback">
                     <div *ngIf="f.NoiSinh.errors.required">Nơi sinh là bắt buộc</div>
                  </div>
               </div>
               <div class="col-md-6 mb-3">
                  <label >Dân tộc</label>
                  <input type="text" class="form-control"  formControlName="DanToc" required="">
-                 <div *ngIf="submitted && f.DanToc.errors" class="d-flex valid-feedback">
+                 <div *ngIf="submitted && f.DanToc.errors" class="d-flex invalid-feedback">
                     <div *ngIf="f.DanToc.errors.required">Dân tộc là bắt buộc</div>
                  </div>
               </div>
@@ -143,7 +143,7 @@
               <div class="col-md-6 mb-3">
                <label >Mật khẩu</label>
                <input type="text" class="form-control"  formControlName="Password" required="">
-               <div *ngIf="submitted && f.Password.errors" class="d-flex valid-feedback">
+               <div *ngIf="submitted && f.Password.errors" class="d-flex invalid-feedback">
                   <div *ngIf="f.DanToc.Password.required">Mật khẩu là bắt buộc</div>
                </div>
             </div>
