@@ -75,7 +75,6 @@ export class DiemdanhComponent extends BaseComponent implements OnInit {
               MaHS:val.MaHS,
               TrangThai:val.TrangThai
             };
-            console.log(cttmp);
             this._api.post('/api/ctdiemdanh/create-ctdiem-danh',cttmp).takeUntil(this.unsubscribe).subscribe(res => {});
           });
           Swal.fire(
@@ -83,7 +82,9 @@ export class DiemdanhComponent extends BaseComponent implements OnInit {
             'Điểm danh thành công',
             'success'
           );
+          setTimeout(() => {
             window.location.reload();
+            }, 1000)
         });
       });
     

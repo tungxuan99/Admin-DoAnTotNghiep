@@ -16,12 +16,28 @@
           <div class="col-md-12">
             <form class="form-horizontal" role="form" [formGroup]="formsearch"  (ngSubmit)="search()">
               <div class="row form-group">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <input formControlName="hoten" class="form-control"  type="text" placeholder="Họ tên" style="width: 100%;" />
                 </div>
                 <div class="col-sm-3">
                     <button (click)="search()" class="btn btn-sm btn-primary">Tìm kiếm</button>
                 </div>
+                <div class="col-sm-2">
+                  <select id = "LopHoc" (change)="changedLop($event.target.value)" class="form-control">
+                     <option value="" selected>--Lớp học--</option>
+                     <ng-container *ngFor="let lh of lophocs">
+                         <option value="{{lh.maLopHoc}}">Lớp {{lh.tenlophoc}}</option>
+                     </ng-container>
+                 </select>
+              </div>
+              <div class="col-sm-2">
+               <select id="KhoiHoc"  (change)="changedKhoi($event.target.value)" class="form-control">
+                     <option value="" selected>--Khối học--</option>
+                     <option value="10">Khối 10</option>
+                     <option value="11">Khối 11</option>
+                     <option value="12">Khối 12</option>
+              </select>
+           </div>
               </div>
             </form>
           </div>

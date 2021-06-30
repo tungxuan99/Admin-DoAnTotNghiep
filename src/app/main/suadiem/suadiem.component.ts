@@ -8,13 +8,14 @@ import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/takeUntil';
 declare var $: any;
 import Swal from 'sweetalert2/dist/sweetalert2.js'; 
+import { isNumeric } from 'rxjs/util/isNumeric';
 
 @Component({
-  selector: 'app-diem',
-  templateUrl: './diem.component.html',
-  styleUrls: ['./diem.component.css']
+  selector: 'app-suadiem',
+  templateUrl: './suadiem.component.html',
+  styleUrls: ['./suadiem.component.css']
 })
-export class DiemComponent extends BaseComponent implements OnInit {
+export class SuadiemComponent extends BaseComponent implements OnInit {
   public hocsinhs: any;
   public lophocs: any;
   public monhocs: any;
@@ -28,6 +29,7 @@ export class DiemComponent extends BaseComponent implements OnInit {
   public maLopHoc: any;
   public NamHoc: any;
   public KyHoc: any;
+  public MaHocKy: any;
   submitted = false;
   @ViewChild(FileUpload, { static: false }) file_image: FileUpload;
   constructor(private fb: FormBuilder, injector: Injector) {
@@ -37,7 +39,9 @@ export class DiemComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.formds = this.fb.group({
     'MaLop': [''],
-    'MonHoc': [''],     
+    'MonHoc': [''],
+    'HocKy': [''],
+    'NamHoc': [''],     
   });
   let tmptoday= new Date();
   this.NamHoc = (tmptoday.getFullYear() -1).toString() +" - "+ tmptoday.getFullYear().toString();
@@ -47,7 +51,8 @@ export class DiemComponent extends BaseComponent implements OnInit {
     }else{
       this.KyHoc = 2
     }
-  
+    this.formds.get('HocKy').setValue(this.KyHoc);
+    this.formds.get('NamHoc').setValue(tmptoday.getFullYear());
   this.check=true;
   this.isCreate=false;
   this._api.get('/api/lophoc/get-all').takeUntil(this.unsubscribe).subscribe(res => {
@@ -67,15 +72,24 @@ get f() { return this.formdata.controls; }
     this.isCreate=true;
     this.maLopHoc=this.formds.get('MaLop').value;
     this.maMonHoc=this.formds.get('MonHoc').value;
-    this._api.get('/api/hocsinh/get-by-lop/'+this.formds.get('MaLop').value).takeUntil(this.unsubscribe).subscribe(res => {
+    this.MaHocKy = (this.formds.get('HocKy').value).toString() + (this.formds.get('NamHoc').value).toString();
+    this._api.get('/api/diem/xem-diem-tb-mon-by-mon/'+this.maLopHoc+'/'+this.MaHocKy+'/'+this.maMonHoc).takeUntil(this.unsubscribe).subscribe(res => {
         this.hocsinhs= res;
+        console.log(this.hocsinhs);
         this.formDiem= this.fb.group({
             'MaLopHoc':[this.maLopHoc],
             'MaMonHoc':[this.maMonHoc],
             DSDiem: this.fb.array([])
         });
         this.hocsinhs.forEach(element => {
-          this.DSDiemList.push(this.addDS(element.maHS, element.tenHS, element.gioiTinh));
+          this.DSDiemList.push(this.addDS(
+              element.maHS, 
+              element.tenHS,
+              element.id,
+              element.diemMieng,
+              element.diem15Phut,
+              element.diem1Tiet,
+              element.diemHK,));
         });
       });
 
@@ -83,15 +97,15 @@ get f() { return this.formdata.controls; }
   get DSDiemList() {
     return this.formDiem.get('DSDiem') as FormArray;
  }
-  addDS(maHS, tenHS, gioiTinh): FormGroup {
+  addDS(maHS, tenHS, MaDiem, diemMieng, diem15Phut, diem1Tiet, diemHK): FormGroup {
     return this.fb.group({
       MaHS: [maHS],
       TenHS: [tenHS],
-      GioiTinh: [gioiTinh],
-      DiemMieng: ['',[CheckDiem]],
-      Diem15Phut: ['',[CheckDiem]],
-      Diem1Tiet: ['',[CheckDiem]],
-      DiemHocKy: ['',[CheckDiem]],
+      MaDiem: [MaDiem],
+      DiemMieng: [diemMieng,[CheckDiem]],
+      Diem15Phut: [diem15Phut,[CheckDiem]],
+      Diem1Tiet: [diem1Tiet,[CheckDiem]],
+      DiemHocKy: [diemHK,[CheckDiem]],
     });
   }
   
@@ -137,27 +151,17 @@ get f() { return this.formdata.controls; }
       DiemHK:diemHK,
       DiemTB:DiemTB
     };
-    this._api.post('/api/diem/create-diem',data).takeUntil(this.unsubscribe).subscribe(res => {
+    this._api.post('/api/diem/update-diem',data).takeUntil(this.unsubscribe).subscribe(res => {
       });
   }
     
   onSubmit(form: any): void{
-       this.submitted = true;
+    this.submitted = true;
       console.log(this.DSDiemList.controls);
       if (this.DSDiemList.status === "INVALID") {
         return;
       }
-    let today= new Date();
-    let MaHocKy="";
-    if(today.getMonth()<2||today.getMonth()>=8)
-    {
-      MaHocKy='1'+today.getFullYear();
-    }else{
-      MaHocKy='2'+today.getFullYear();
-    }
-    this._api.get('/api/diem/get-end-diem').takeUntil(this.unsubscribe).subscribe((res:any) => {
-      let diemid = res;
-      let dem =1;
+    let MaHocKy=this.MaHocKy;
       (form.DSDiem).forEach(element => {
         let maHK=MaHocKy;
         let maMonHoc= form.MaMonHoc;
@@ -167,18 +171,16 @@ get f() { return this.formdata.controls; }
         let diem15Phut= element.Diem15Phut;
         let diem1Tiet= element.Diem1Tiet;
         let diemHK= element.DiemHocKy;
-        let id = Number.parseInt(diemid.id) + dem; 
+        let id = element.MaDiem; 
         this.CreateDiem(id,maHS,maHK,maMonHoc,maLopHoc,diemMieng,diem15Phut,diem1Tiet,diemHK);
-        dem++;
       });
-    });
     Swal.fire(
-      'Đã thêm!',
-      'Thêm thành công',
+      'Thành công!',
+      'Sửa điểm thành công',
       'success'
     );
     setTimeout(() => {
-      window.location.reload();
-      }, 1000)
+    window.location.reload();
+    }, 1000)
   }
 }

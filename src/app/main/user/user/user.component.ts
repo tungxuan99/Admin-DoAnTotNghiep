@@ -4,7 +4,7 @@ import { FileUpload } from 'primeng/fileupload';
 import { FormBuilder, Validators} from '@angular/forms';
 import {FormControl, FormGroup} from '@angular/forms' 
 import { BaseComponent } from '../../../lib/base.component';
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/takeUntil';
 import Swal from 'sweetalert2/dist/sweetalert2.js'; 
 declare var $: any;
@@ -174,7 +174,6 @@ export class UserComponent extends BaseComponent implements OnInit {
       $('#createUserModal').modal('toggle');
       this._api.get('/api/users/get-by-id/'+ row.id).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.user = res; 
-        console.log(this.user);
           this.formdata = this.fb.group({
             'hoten': [this.user.hoTen, Validators.required],
             'taikhoan': [this.user.username, Validators.required],

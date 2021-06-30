@@ -25,6 +25,8 @@ import { XemdiemhkComponent } from './xemdiemhk/xemdiemhk.component';
 import { ExportDiemComponent } from './export-diem/export-diem.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { XemdiemlopComponent } from './xemdiemlop/xemdiemlop.component';
+import { XemdiemmonComponent } from './xemdiemmon/xemdiemmon.component';
+import { SuadiemComponent } from './suadiem/suadiem.component';
 
 
 export const mainRoutes: Routes = [
@@ -83,6 +85,12 @@ export const mainRoutes: Routes = [
           data: { roles: [Role.Admin, Role.User] },
         },
         {
+          path: 'suadiem',
+          component: SuadiemComponent,
+          canActivate: [RoleGuard],
+          data: { roles: [Role.Admin] },
+        },
+        {
           path: 'xemdiem',
           component: XemdiemComponent,
           canActivate: [RoleGuard],
@@ -91,6 +99,12 @@ export const mainRoutes: Routes = [
         {
           path: 'xemdiemtheolop',
           component: XemdiemlopComponent,
+          canActivate: [RoleGuard],
+          data: { roles: [Role.Admin, Role.User] },
+        },
+        {
+          path: 'xemdiemtheomon',
+          component: XemdiemmonComponent,
           canActivate: [RoleGuard],
           data: { roles: [Role.Admin, Role.User] },
         },
@@ -139,7 +153,9 @@ export const mainRoutes: Routes = [
     XemdiemComponent,
     XemdiemhkComponent,
     ExportDiemComponent,
-    XemdiemlopComponent
+    XemdiemlopComponent,
+    XemdiemmonComponent,
+    SuadiemComponent
   ],
   imports: [
     SharedModule,

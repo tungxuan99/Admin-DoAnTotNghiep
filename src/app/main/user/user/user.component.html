@@ -19,7 +19,7 @@
                     <th scope="col">STT</th>
                     <th scope="col">Họ tên</th>
                     <th scope="col">Tên tài khoản</th>
-                    <th scope="col">Mật khẩu</th>
+                    <!-- <th scope="col">Mật khẩu</th> -->
                     <th scope="col">Quyền</th>
                     <th scope="col">Tác vụ</th>
                 </tr>
@@ -30,7 +30,7 @@
                   <td style="text-align: center;">{{i+1}}</td>
                   <td>{{ item.hoTen }}</td>
                   <td>{{ item.username }}</td>
-                  <td>{{ item.password }}</td>
+                  <!-- <td>{{ item.password }}</td> -->
                   <td style="text-align: center;">{{ item.level }}</td>
                   <td class="action-col text-center" >
                     <div class="btn-group">
@@ -67,21 +67,21 @@
             <div class="col-md-6 mb-3">
                <label>Họ Tên</label>
                <input type="text" class="form-control"  formControlName="hoten" required="">
-               <div *ngIf="submitted && f.hoten.errors" class="invalid-feedback">
+               <div *ngIf="submitted && f.hoten.errors" class="d-flex invalid-feedback">
                  <div *ngIf="f.hoten.errors.required">Họ tên là bắt buộc</div>
                </div>
             </div>
             <div class="col-md-6 mb-3">
                <label >Tên tài khoản</label>
                <input type="text" class="form-control" formControlName="taikhoan" required="">
-               <div *ngIf="submitted && f.taikhoan.errors" class="invalid-feedback">
+               <div *ngIf="submitted && f.taikhoan.errors" class="d-flex invalid-feedback">
                  <div *ngIf="f.taikhoan.errors.required">Tài khoản là bắt buộc</div>
                </div>
             </div>
             <div class="col-md-6 mb-3">
              <label >Mật khẩu</label>
              <input type="text" class="form-control"  formControlName="matkhau" required="">
-             <div *ngIf="submitted && f.matkhau.errors" class="invalid-feedback">
+             <div *ngIf="submitted && f.matkhau.errors" class="d-flex invalid-feedback">
                <div *ngIf="f.matkhau.errors.required">Mật khẩu là bắt buộc</div>
                <div *ngIf="f.matkhau.errors.matkhau">Độ dài mật khẩu tối thiệu phải là 6 ký tự và phải chứa ký tự đặc biệt @#!$%&*</div>
               </div>
@@ -89,7 +89,7 @@
           <div class="col-md-6 mb-3">
              <label >Nhập lại mật khẩu</label>
              <input type="text" class="form-control"  formControlName="nhaplaimatkhau" required="">
-             <div *ngIf="submitted && f.nhaplaimatkhau.errors" class="invalid-feedback">
+             <div *ngIf="submitted && f.nhaplaimatkhau.errors" class="d-flex invalid-feedback">
                <div *ngIf="f.nhaplaimatkhau.errors.required">Xác nhận lại mật khẩu là bắt buộc</div>
                <div *ngIf="f.nhaplaimatkhau.errors.mustMatch">Xác thực lại mật khẩu không đúng</div>
              </div>
@@ -97,11 +97,11 @@
             <div class="col-md-6 mb-3">
                <label>Chọn quyền</label>
                <select class="custom-select" formControlName="role">
-                <ng-container *ngFor="let r of roles">
-                <option value="{{r.value}}">{{r.value}}</option>
-                </ng-container>
+                <option value="Admin">Admin</option>
+                <option value="User">User</option>
+                <option value="Student">Học sinh</option>
               </select>
-               <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
+               <div *ngIf="submitted && f.role.errors" class="d-flex invalid-feedback">
                  <div *ngIf="f.role.errors.required">Loại quyền là bắt buộc</div>
                </div>
             </div>

@@ -28,6 +28,8 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
   public doneSetupForm: any;  
   public showUpdateModal:any;
   public isCreate:any;
+  public MaLophoc: any;
+  public KhoiHoc: any
   submitted = false;
   @ViewChild(FileUpload, { static: false }) file_image: FileUpload;
   constructor(private fb: FormBuilder, injector: Injector,private datePipe: DatePipe) {
@@ -47,7 +49,7 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
   }
 
   loadPage(page) { 
-    this._api.post('/api/hocsinh/search',{page: page, pageSize: this.pageSize}).takeUntil(this.unsubscribe).subscribe(res => {
+    this._api.post('/api/hocsinh/search',{page: page, pageSize: this.pageSize, hoten: this.formsearch.get('hoten').value, malophoc: this.MaLophoc, khoihoc:this.KhoiHoc}).takeUntil(this.unsubscribe).subscribe(res => {
       this.hocsinhs = res.data;
       this.totalRecords =  res.totalItems;
       this.pageSize = res.pageSize;
@@ -57,7 +59,7 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
   search() { 
     this.page = 1;
     this.pageSize = 5;
-    this._api.post('/api/hocsinh/search',{page: this.page, pageSize: this.pageSize, hoten: this.formsearch.get('hoten').value}).takeUntil(this.unsubscribe).subscribe(res => {
+    this._api.post('/api/hocsinh/search',{page: this.page, pageSize: this.pageSize, hoten: this.formsearch.get('hoten').value, malophoc: this.MaLophoc, khoihoc:this.KhoiHoc}).takeUntil(this.unsubscribe).subscribe(res => {
       this.hocsinhs = res.data;
       console.log(this.hocsinhs);
       this.totalRecords =  res.totalItems;
@@ -221,5 +223,14 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
 
   closeModal() {
     $('#createUserModal').closest('.modal').modal('hide');
+  }
+
+  changedLop(e) {
+    this.MaLophoc = e;
+    this.search()
+  }
+  changedKhoi(e) {
+    this.KhoiHoc = e;
+    this.search();
   }
 }

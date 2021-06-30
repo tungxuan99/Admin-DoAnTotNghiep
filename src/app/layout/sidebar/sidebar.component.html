@@ -13,7 +13,7 @@
           <ng-container *ngIf="role=='Admin'">
             <div class="menu-item">
                <a [routerLink]="['/hocsinh']"  class="menu-link">
-               <span class="menu-icon"><i class="fa fa-chart-pie"></i></span>
+               <span class="menu-icon"><i class="fa fa-graduation-cap"></i></span>
                <span class="menu-text">Học sinh</span>
                </a>
             </div>
@@ -21,7 +21,7 @@
          <ng-container *ngIf="role=='Admin'">
           <div class="menu-item">
             <a [routerLink]="['/giaovien']"  class="menu-link">
-            <span class="menu-icon"><i class="fa fa-heart"></i></span>
+            <span class="menu-icon"><i class="fa fa-users"></i></span>
             <span class="menu-text">Giáo viên</span>
             </a>
          </div>
@@ -34,24 +34,64 @@
          <!-- <ng-container *ngIf="role=='Admin'"> -->
          <div class="menu-item">
             <a [routerLink]="['/lophoc']"  class="menu-link">
-            <span class="menu-icon"><i class="fa fa-book"></i></span>
+            <span class="menu-icon"><i class="fa fa-table"></i></span>
             <span class="menu-text">Lớp học</span>
             </a>
          </div>
       </ng-container>
       <ng-container *ngIf="role=='Admin'|| role=='User'">
+         <div class="menu-item has-sub expand">
+            <a href="#" class="menu-link">
+            <span class="menu-icon"><i class="fa fa-book"></i></span>
+            <span class="menu-text">Xem điểm</span>
+            <span class="menu-caret"><b class="caret"></b></span>
+            </a>
+            <div class="menu-submenu" >
+               <div class="menu-item">
+                  <a [routerLink]="['/xemdiemtheolop']"  class="menu-link">
+                     <span class="menu-text">Xem điểm trung bình</span>
+                  </a>
+               </div>
+               <div class="menu-item">
+                  <a [routerLink]="['/xemdiemtheomon']"  class="menu-link">
+                     <span class="menu-text">Xem điểm theo môn</span>
+                  </a>
+               </div>
+            </div>
+         </div>
+
+      </ng-container>
+      <ng-container *ngIf="role=='User'">
          <div class="menu-item">
             <a [routerLink]="['/diemdanh']"  class="menu-link">
             <span class="menu-icon"><i class="fa fa-address-book"></i></span>
             <span class="menu-text">Điểm danh</span>
             </a>
          </div>
-         <div class="menu-item">
-            <a [routerLink]="['/diem']"  class="menu-link">
+      </ng-container>
+      <ng-container *ngIf="role=='Admin'|| role=='User'">
+         <div class="menu-item has-sub expand">
+            <a href="#" class="menu-link">
             <span class="menu-icon"><i class="fa fa-qrcode"></i></span>
             <span class="menu-text">Điểm</span>
+            <span class="menu-caret"><b class="caret"></b></span>
             </a>
+            <div class="menu-submenu" >
+               <div class="menu-item">
+                  <a [routerLink]="['/diem']"  class="menu-link">
+                     <span class="menu-text">Thêm điểm</span>
+                  </a>
+               </div>
+               <ng-container *ngIf="role=='Admin'">
+                  <div class="menu-item">
+                     <a [routerLink]="['/suadiem']"  class="menu-link">
+                        <span class="menu-text">Sửa điểm</span>
+                     </a>
+                  </div>
+             </ng-container>
+            </div>
          </div>
+
       </ng-container>
       <ng-container *ngIf="role=='Admin'">
          <div class="menu-item">
