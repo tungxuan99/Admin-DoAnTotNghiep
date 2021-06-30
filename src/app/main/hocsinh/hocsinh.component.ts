@@ -43,7 +43,6 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
     });
     this._api.get('/api/lophoc/get-all').takeUntil(this.unsubscribe).subscribe(res => {
       this.lophocs= res;
-      console.log(this.lophocs);
       });
    this.search();
   }
@@ -61,7 +60,6 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
     this.pageSize = 5;
     this._api.post('/api/hocsinh/search',{page: this.page, pageSize: this.pageSize, hoten: this.formsearch.get('hoten').value, malophoc: this.MaLophoc, khoihoc:this.KhoiHoc}).takeUntil(this.unsubscribe).subscribe(res => {
       this.hocsinhs = res.data;
-      console.log(this.hocsinhs);
       this.totalRecords =  res.totalItems;
       this.pageSize = res.pageSize;
       });
@@ -75,7 +73,6 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
     if (this.formdata.invalid) {
       return;
     } 
-    console.log(this.isCreate);
     if(this.isCreate) { 
       let ngay =this.datePipe.transform(value.NgaySinh,"yyyy-MM-dd");
         let tmp = {
@@ -199,9 +196,7 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
       $('#createUserModal').modal('toggle');
       this._api.get('/api/hocsinh/get-by-id/'+ row.maHS).takeUntil(this.unsubscribe).subscribe((res:any) => {
         this.hocsinh = res; 
-        console.log(this.hocsinh);
         let ngay =this.datePipe.transform(this.hocsinh.ngaySinh,"yyyy-MM-dd");
-        console.log(ngay);
         
           this.formdata = this.fb.group({
             'MaHS': [this.hocsinh.maHS, Validators.required],

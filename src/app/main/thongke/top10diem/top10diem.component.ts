@@ -25,7 +25,6 @@ export class Top10diemComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this._api.get('/api/diem/top-10-diem-by-hk/22019').takeUntil(this.unsubscribe).subscribe(res => {
       this.hocsinhs = res;
-      console.log(this.hocsinhs);
       });
   }
   changed(e){

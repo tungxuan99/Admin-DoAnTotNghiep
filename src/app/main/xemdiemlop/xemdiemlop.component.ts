@@ -56,7 +56,6 @@ export class XemdiemlopComponent extends BaseComponent implements OnInit {
     this.MaLop= this.form.get('MaLop').value;
     this._api.get('/api/diem/xem-diem-tb-mon-by-lop/'+this.form.get('MaLop').value + '/' + this.form.get('MaHocKy').value).takeUntil(this.unsubscribe).subscribe(res => {
         this.diems= this.XuLyData(res);
-        console.log(res);
       });
 
   }

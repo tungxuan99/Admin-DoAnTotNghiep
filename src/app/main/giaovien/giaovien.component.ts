@@ -39,7 +39,6 @@ export class GiaovienComponent extends BaseComponent implements OnInit {
     });
     this._api.get('/api/monhoc/get-all').takeUntil(this.unsubscribe).subscribe(res => {
       this.monhocs= res;
-      console.log(this.monhocs);
       });
    this.search();
   }

@@ -56,7 +56,6 @@ export class DiemdanhComponent extends BaseComponent implements OnInit {
   get f() { return this.formdata.controls; }
 
   onSubmit(form: any): void{
-    console.log(form);
     let date= new Date();
     let ngay =this.datePipe.transform(date,"yyyy-MM-dd");
     let tmp = {
@@ -69,7 +68,6 @@ export class DiemdanhComponent extends BaseComponent implements OnInit {
         this._api.get('/api/diemdanh/get-all').takeUntil(this.unsubscribe).subscribe(res => {
           this.diemdanh=res;
           form.DSHS.forEach(val => {
-            
             let cttmp={
               MaDD:this.diemdanh[0].maDD,
               MaHS:val.MaHS,

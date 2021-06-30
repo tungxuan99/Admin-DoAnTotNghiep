@@ -34,7 +34,6 @@ export class XemdiemComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this._api.get('/api/diem/get-by-hs-hk/'+this.authenticationService.userValue.username+"/"+'22019').takeUntil(this.unsubscribe).subscribe(res => {
       this.diems = res;
-      console.log(this.diems);
       this.DiemTBHocKy= this.TinhDiemTB(this.diems);
       });
     this.user=this.authenticationService.userValue;

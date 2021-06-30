@@ -96,7 +96,6 @@ export class DiemTBKyHocComponent extends BaseComponent implements OnInit {
           y: yeu.length, name: "Yếu"
         },
       ];
-      console.log(this.dataChart);
       let chart = new CanvasJS.Chart("chartContainer", {
         theme: "light2",
         animationEnabled: true,

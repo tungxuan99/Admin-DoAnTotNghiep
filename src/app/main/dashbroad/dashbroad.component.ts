@@ -23,7 +23,6 @@ export class DashbroadComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // console.log(this.authenticationService.userValue);
     this.tentk=this.authenticationService.userValue.hoTen;
   }
 
