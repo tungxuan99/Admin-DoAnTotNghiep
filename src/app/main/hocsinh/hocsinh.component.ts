@@ -133,14 +133,26 @@ export class HocsinhComponent extends BaseComponent implements OnInit {
       cancelButtonText: 'Không'
     }).then((result) => {
       if (result.value) {
-        this._api.post('/api/hocsinh/delete-hoc-sinh', { id: row.maHS }).takeUntil(this.unsubscribe).subscribe(res => {
-          this.search();
-        });
-        Swal.fire(
-          'Đã xoá!',
-          'Bản ghi không thể khôi phục',
-          'success'
-        );
+        this._api.get('/api/diem/get-by-hs-hk/'+row.maHS+"/"+'22019').takeUntil(this.unsubscribe).subscribe(res => {
+         let tmp = res;
+         if(tmp)
+         {
+            this._api.post('/api/hocsinh/delete-hoc-sinh', { id: row.maHS }).takeUntil(this.unsubscribe).subscribe(res => {
+              this.search();
+            });
+            Swal.fire(
+              'Đã xoá!',
+              'Bản ghi không thể khôi phục',
+              'success'
+            );
+         }else {
+          Swal.fire(
+            'Thất bại!',
+            'Bản ghi không thể xoá',
+            'danger'
+          );
+         }
+          });
       }
     });
   }

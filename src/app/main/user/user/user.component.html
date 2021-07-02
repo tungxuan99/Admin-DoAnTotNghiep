@@ -80,7 +80,7 @@
             </div>
             <div class="col-md-6 mb-3">
              <label >Mật khẩu</label>
-             <input type="text" class="form-control"  formControlName="matkhau" required="">
+             <input type="password" class="form-control"  formControlName="matkhau" required="">
              <div *ngIf="submitted && f.matkhau.errors" class="d-flex invalid-feedback">
                <div *ngIf="f.matkhau.errors.required">Mật khẩu là bắt buộc</div>
                <div *ngIf="f.matkhau.errors.matkhau">Độ dài mật khẩu tối thiệu phải là 6 ký tự và phải chứa ký tự đặc biệt @#!$%&*</div>
@@ -88,7 +88,7 @@
           </div>
           <div class="col-md-6 mb-3">
              <label >Nhập lại mật khẩu</label>
-             <input type="text" class="form-control"  formControlName="nhaplaimatkhau" required="">
+             <input type="password" class="form-control"  formControlName="nhaplaimatkhau" required="">
              <div *ngIf="submitted && f.nhaplaimatkhau.errors" class="d-flex invalid-feedback">
                <div *ngIf="f.nhaplaimatkhau.errors.required">Xác nhận lại mật khẩu là bắt buộc</div>
                <div *ngIf="f.nhaplaimatkhau.errors.mustMatch">Xác thực lại mật khẩu không đúng</div>

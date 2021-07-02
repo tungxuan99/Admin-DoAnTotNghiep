@@ -45,7 +45,7 @@
           <div class="row mb-n3">
             <div class="col-md-6 mb-3">
                <label>Mật khẩu cũ</label>
-               <input type="text" class="form-control"  formControlName="oldPassWord" required="">
+               <input type="password" class="form-control"  formControlName="oldPassWord" required="">
                <div *ngIf="submitted && fr.oldPassWord.errors" class="d-flex invalid-feedback">
                  <div *ngIf="fr.oldPassWord.errors.matkhaulength">Ít nhất phải 6 ký tự</div>
                  <div *ngIf="fr.oldPassWord.errors.matkhau">Mật khẩu không đúng</div>
@@ -53,7 +53,7 @@
             </div>
             <div class="col-md-6 mb-3">
                <label >Mật khẩu mới</label>
-               <input type="text" class="form-control" formControlName="newPassWord" required="">
+               <input type="password" class="form-control" formControlName="newPassWord" required="">
                <div *ngIf="submitted && fr.newPassWord.errors" class="d-flex invalid-feedback">
                  <div *ngIf="fr.newPassWord.errors.required">Không được để trống</div>
                  <div *ngIf="fr.newPassWord.errors.minlength">Mật khẩu ít nhất phải 6 ký tự</div>
@@ -61,7 +61,7 @@
             </div>
             <div class="col-md-6 mb-3">
              <label >Nhập lại</label>
-             <input type="text" class="form-control"  formControlName="newPassWord1" required="">
+             <input type="password" class="form-control"  formControlName="newPassWord1" required="">
              <div *ngIf="submitted && fr.newPassWord1.errors" class="d-flex invalid-feedback">
                <div *ngIf="fr.newPassWord1.errors.required">Mật khẩu là bắt buộc</div>
                <div *ngIf="fr.newPassWord1.errors.mustMatch">Mật khẩu không trùng khớp</div>
